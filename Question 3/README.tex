@@ -1,0 +1,629 @@
+\documentclass[12pt,preprint, authoryear]{elsarticle}
+
+\usepackage{lmodern}
+%%%% My spacing
+\usepackage{setspace}
+\setstretch{1.2}
+\DeclareMathSizes{12}{14}{10}{10}
+
+% Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+
+\let\origtable\table
+\let\endorigtable\endtable
+\renewenvironment{table}[1][2] {
+    \expandafter\origtable\expandafter[H]
+} {
+    \endorigtable
+}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts}
+
+\def\bibsection{\section*{References}} %%% Make "References" appear before bibliography
+
+
+\usepackage[round]{natbib}
+
+\usepackage{longtable}
+\usepackage[margin=2.3cm,bottom=2cm,top=2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[bottom, hang, flushmargin]{footmisc}
+\usepackage{graphicx}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\usepackage{textcomp}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%  Remove the "preprint submitted to" part. Don't worry about this either, it just looks better without it:
+
+ \def\tightlist{} % This allows for subbullets!
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=blue,
+            pdfborder={0 0 0}}
+
+
+% The following packages allow huxtable to work:
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+\newenvironment{columns}[1][]{}{}
+
+\newenvironment{column}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{CSLReferences}%
+  {\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
+  {\par}
+
+
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+%%% Include extra packages specified by user
+\usepackage{float}\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+%%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
+%% page layout
+%% paragraphs
+\setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}
+%% floats
+\setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+\setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\intextsep}{14pt plus 0pt minus 0pt}
+\setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+%% maths
+\setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+%% lists
+\setlength{\topsep}{10pt plus 0pt minus 0pt}
+\setlength{\partopsep}{3pt plus 0pt minus 0pt}
+\setlength{\itemsep}{5pt plus 0pt minus 0pt}
+\setlength{\labelsep}{8mm plus 0mm minus 0mm}
+\setlength{\parsep}{\the\parskip}
+\setlength{\listparindent}{\the\parindent}
+%% verbatim
+\setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+
+
+
+\begin{document}
+
+
+
+\begin{frontmatter}  %
+
+\title{An Analysis of the Russia-Ukraine Conflict and the Topic of
+Country Aid}
+
+% Set to FALSE if wanting to remove title (for submission)
+
+
+
+
+\author[Add1]{Annika Pretorius (21626979)\footnote{\textbf{Contributions:}
+  \newline \emph{The producer of ``From Russia With No Love'' for the
+  data provided.}}}
+\ead{}
+
+
+
+
+
+\address[Add1]{Australian News Presenter}
+
+\cortext[cor]{Corresponding author: Annika Pretorius
+(21626979)\footnote{\textbf{Contributions:} \newline \emph{The producer
+  of ``From Russia With No Love'' for the data provided.}}}
+
+\begin{abstract}
+\small{
+This article aims to discuss whether European countries have aided
+Ukraine in the war against Russia.
+}
+\end{abstract}
+
+\vspace{1cm}
+
+
+
+
+
+\vspace{0.5cm}
+
+\end{frontmatter}
+
+
+
+%________________________
+% Header and Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{\footnotesize Page \thepage}
+\lhead{}
+%\rfoot{\footnotesize Page \thepage } % "e.g. Page 2"
+\cfoot{}
+
+%\setlength\headheight{30pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%________________________
+
+\headsep 35pt % So that header does not go over title
+
+
+
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Background of the Russia-Ukraine Conflict}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The conflict between Russia and Ukraine escalated in 2014 with
+    Russia's annexation of Crimea and support for separatist movements
+    in Eastern Ukraine.
+  \item
+    The conflict has led to significant humanitarian crises and
+    geopolitical tensions, impacting international relations and
+    security dynamics.
+  \end{itemize}
+\item
+  \textbf{European Union's Response}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The EU has played a crucial role in providing support to Ukraine,
+    both through individual member states and collective efforts.
+  \item
+    Financial aid and commitments have been made to support Ukraine's
+    military, humanitarian, and economic needs.
+  \end{itemize}
+\item
+  \textbf{Purpose of the Analysis}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This analysis aims to evaluate the extent of aid provided by EU
+    countries to Ukraine.
+  \item
+    The focus is on financial allocations and commitments, with a
+    breakdown into different types of aid such as military and
+    humanitarian support.
+  \end{itemize}
+\item
+  \textbf{Key Questions Addressed}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Which EU countries are the top contributors in terms of financial
+    allocations and commitments to Ukraine and which are the lowest?
+  \item
+    How do the types of aid (military vs.~humanitarian) vary among the
+    top contributing countries?
+  \end{itemize}
+\item
+  \textbf{Significance of the Analysis}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Understanding the support provided by EU countries helps gauge the
+    international community's efforts in assisting Ukraine.
+  \item
+    The analysis sheds light on the strategic and humanitarian
+    priorities of the EU in addressing the ongoing conflict and its
+    repercussions.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{the-difference-between-financial-allocations-and-financial-commitments}{%
+\section{The Difference between Financial Allocations and Financial
+Commitments}\label{the-difference-between-financial-allocations-and-financial-commitments}}
+
+\begin{itemize}
+\item
+  Financial Allocation refers to the funds that have been officially
+  designated or set aside for a specific purpose or project. In this
+  case, it means the money that has been allocated by EU countries to
+  support Ukraine.An EU country might allocate €1 billion for
+  humanitarian aid to Ukraine, which means this amount is reserved in
+  their budget for this purpose.
+\item
+  Financial Commitment refers to the amounts that have been pledged or
+  promised to be delivered in support of Ukraine. These are the funds
+  that countries have committed to providing, which might be part of
+  international agreements or announcements. An EU country might commit
+  €500 million to Ukraine over the next two years for military aid,
+  which means they promise to provide this amount, but it might be
+  delivered in installments.
+\item
+  Financial Allocations are usually immediate and part of a current
+  budget. These funds have been set aside and are ready for
+  disbursement. Financial Commitments may span over multiple years and
+  indicate future support. These are pledges made to provide aid over a
+  longer period and may require further authorization or legislative
+  approval before they can be fully disbursed.
+\item
+  Financial Allocations have an immediate impact as they are part of
+  active budgets and can be disbursed quickly. Financial Commitments
+  impact planning and international relations, signaling long-term
+  support. They indicate a commitment to future aid, which can influence
+  diplomatic and strategic planning.
+\end{itemize}
+
+\hypertarget{the-top-5-european-union-allocators}{%
+\section{The Top 5 European Union
+Allocators}\label{the-top-5-european-union-allocators}}
+
+\begin{itemize}
+\item
+  \textbf{Table \ref{tab1}}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Presents a detailed summary of the financial allocations made by EU
+    countries to Ukraine.
+  \end{itemize}
+\item
+  \textbf{EU (Commission and Council)}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Stands out as the largest contributor, with a total allocation of
+    \$43.83 billion.
+  \item
+    Includes significant military support totaling \$34.38 billion.
+  \item
+    Notable humanitarian allocation of \$10.49 billion.
+  \end{itemize}
+\item
+  \textbf{Estonia}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Second-largest contributor with \$29.66 billion.
+  \item
+    Primarily focused on humanitarian aid, highlighting its significant
+    commitment to supporting Ukraine.
+  \end{itemize}
+\item
+  \textbf{Other Notable Contributors}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Italy, Bulgaria, France, and Finland have also contributed various
+    amounts.
+  \item
+    France provides the highest military allocation among them at
+    \$10.75 billion.
+  \end{itemize}
+\item
+  \textbf{Total Bilateral Allocation}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Aggregates these contributions, demonstrating the comprehensive
+    financial support provided directly by each country.
+  \end{itemize}
+\item
+  \textbf{Overall Illustration}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This table underscores the critical role played by individual EU
+    countries in aiding Ukraine.
+  \item
+    Highlights both military and humanitarian efforts.
+  \end{itemize}
+\end{itemize}
+
+\begingroup\fontsize{12pt}{13pt}\selectfont
+\begin{longtable}{lrrr}
+\caption{Summary of EU Aid to Ukraine \label{tab1}} \\ 
+  \toprule
+Country & Total\_Allocation & Military\_Allocation & Total\_Bilateral\_Allocation \\ 
+  \midrule
+EU(Commission and Council) & 43.83 & 34.38 & 88.71 \\ 
+  Estonia & 29.66 & 0.00 & 32.11 \\ 
+  Italy & 5.18 & 0.07 & 6.34 \\ 
+  Bulgaria & 3.70 & 2.07 & 6.16 \\ 
+  France & 1.51 & 10.75 & 15.52 \\ 
+  Finland & 0.86 & 2.88 & 4.13 \\ 
+   \bottomrule
+\end{longtable}
+\endgroup
+
+\begin{figure}
+
+{\centering \includegraphics{README_files/figure-latex/unnamed-chunk-1-1} 
+
+}
+
+\caption{Top 10 EU Countries Humanitarian Commitments to Ukraine\label{Figure1}}\label{fig:unnamed-chunk-1}
+\end{figure}
+
+\hypertarget{the-top-5-european-commiters}{%
+\section{The Top 5 European
+Commiters}\label{the-top-5-european-commiters}}
+
+\textbf{Table \ref{tab2}}:
+
+\begin{itemize}
+\item
+  Summarizes the financial commitments made by EU countries to Ukraine,
+  emphasizing their pledged support.
+\item
+  \textbf{EU (Commission and Council)}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Leads with a total commitment of \$71.04 billion.
+  \item
+    Indicates long-term financial support with a significant military
+    commitment of \$56.11 billion.
+  \end{itemize}
+\item
+  \textbf{Germany}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Second-largest contributor with a commitment of \$24.71 billion.
+  \item
+    Includes \$19.94 billion for military aid, reflecting its strategic
+    support for Ukraine's defense capabilities.
+  \end{itemize}
+\item
+  \textbf{Other Notable Commitments}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The Netherlands, Poland, France, and Austria also make notable
+    commitments.
+  \item
+    Military commitments form a substantial part of their total
+    contributions.
+  \end{itemize}
+\item
+  \textbf{Overall Illustration}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This table illustrates the pledged support from various EU
+    countries.
+  \item
+    Showcases their readiness to provide ongoing financial and military
+    assistance to Ukraine.
+  \item
+    Reflects the strategic and humanitarian priorities of the EU
+    countries in supporting Ukraine amidst ongoing challenges.
+  \end{itemize}
+\end{itemize}
+
+\begingroup\fontsize{11pt}{12pt}\selectfont
+\begin{longtable}{lrrr}
+\caption{Summary of EU Commitments to Ukraine \label{tab2}} \\ 
+  \toprule
+Country & Total\_Commitment & Military\_Commitment & Total\_Bilateral\_Commitment \\ 
+  \midrule
+EU(Commission and Council) & 7.43 & 56.11 & 71.04 \\ 
+  Germany & 1.51 & 19.94 & 24.71 \\ 
+  Netherlands & 1.13 & 4.76 & 6.66 \\ 
+  Poland & 1.01 & 3.21 & 4.63 \\ 
+  France & 0.86 & 6.05 & 7.29 \\ 
+  Austria & 0.73 & 0.00 & 0.86 \\ 
+   \bottomrule
+\end{longtable}
+\endgroup
+
+\begin{figure}
+
+{\centering \includegraphics{README_files/figure-latex/unnamed-chunk-2-1} 
+
+}
+
+\caption{Top 10 EU Countries Humanitarian Commitments to Ukraine\label{Figure2}}\label{fig:unnamed-chunk-2}
+\end{figure}
+
+\hypertarget{lowest-5-european-allocators}{%
+\section{Lowest 5 European
+Allocators}\label{lowest-5-european-allocators}}
+
+\begingroup\fontsize{12pt}{13pt}\selectfont
+\begin{longtable}{lrrr}
+\caption{Summary of EU Aid to Ukraine \label{tab1}} \\ 
+  \toprule
+Country & Total\_Allocation & Military\_Allocation & Total\_Bilateral\_Allocation \\ 
+  \midrule
+Belgium & 0.00 & 0.26 & 0.26 \\ 
+  Cyprus & 0.00 & 1.38 & 1.44 \\ 
+  Denmark & 0.00 & 0.52 & 0.58 \\ 
+  Germany & 0.00 & 0.14 & 0.14 \\ 
+  Greece & 0.00 & 0.00 & 0.06 \\ 
+   \bottomrule
+\end{longtable}
+\endgroup
+
+\hypertarget{lowest-5-european-commiters}{%
+\section{Lowest 5 European
+Commiters}\label{lowest-5-european-commiters}}
+
+\begingroup\fontsize{11pt}{12pt}\selectfont
+\begin{longtable}{lrrr}
+\caption{Summary of EU Commitments to Ukraine \label{tab2}} \\ 
+  \toprule
+Country & Total\_Commitment & Military\_Commitment & Total\_Bilateral\_Commitment \\ 
+  \midrule
+Bulgaria & 0.00 & 0.26 & 0.26 \\ 
+  Croatia & 0.00 & 0.20 & 0.30 \\ 
+  Czech Republic & 0.00 & 1.38 & 1.45 \\ 
+  Estonia & 0.00 & 0.95 & 1.14 \\ 
+  Greece & 0.00 & 0.14 & 0.14 \\ 
+   \bottomrule
+\end{longtable}
+\endgroup
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{General Observations}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Both tables highlight countries with minimal total financial
+    allocations and commitments.
+  \item
+    Despite low overall contributions, some countries still provide
+    notable military aid.
+  \end{itemize}
+\item
+  \textbf{Lowest Allocators}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    These countries have not allocated significant funds to Ukraine in
+    terms of total financial aid.
+  \item
+    Cyprus and Denmark stand out with higher military allocations
+    compared to others, despite no total allocation.
+  \end{itemize}
+\item
+  \textbf{Lowest Committers}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Similar to the allocators, these countries show minimal total
+    commitments.
+  \item
+    The Czech Republic, although low in total commitment, has a
+    substantial military commitment.
+  \item
+    Estonia has a notable total bilateral commitment, suggesting focused
+    aid despite a low overall commitment.
+  \end{itemize}
+\item
+  \textbf{Implications}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    These tables help identify the countries with the least financial
+    engagement in supporting Ukraine.
+  \item
+    The focus on military aid indicates strategic contributions, even
+    from countries with otherwise low financial involvement.
+  \end{itemize}
+\end{itemize}
+
+\bibliography{Tex/ref}
+
+
+
+
+
+\end{document}

@@ -1,24 +1,223 @@
 ---
+title: "An Analysis of the Russia-Ukraine Conflict and the Topic of Country Aid"
+documentclass: "elsarticle"
+Thesis_FP: FALSE
+AddTitle: TRUE
+Author1: "Annika Pretorius (21626979)^[__Contributions:__  \\newline _The producer of “From Russia With No Love” for the data provided._]"
+Ref1: "Australian News Presenter"
+CorrespAuthor_1: TRUE
+BottomRFooter: "\\footnotesize Page \\thepage"
+addtoprule: TRUE
+addfootrule: TRUE
+margin: 2.3
+bottom: 2
+top: 2.5
+HardSet_layout: TRUE
+linenumbers: FALSE
+bibliography: Tex/ref.bib
+csl: Tex/harvard-stellenbosch-university.csl
+toc: FALSE
+numbersections: TRUE
+fontsize: 12pt
+linestretch: 1.2
+link-citations: TRUE
+header-includes:
+  - \usepackage{float}
 output:
-  md_document:
-    variant: markdown_github
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5
+    fig_height: 3.5
+abstract: |
+  This article aims to discuss whether European countries have aided Ukraine in the war against Russia. 
 ---
 
-# Purpose
 
-Purpose of this work folder.
+# Introduction 
 
-Ideally store a minimum working example data set in data folder.
+- **Background of the Russia-Ukraine Conflict**
+  - The conflict between Russia and Ukraine escalated in 2014 with Russia's annexation of Crimea and support for separatist movements in Eastern Ukraine.
+  - The conflict has led to significant humanitarian crises and geopolitical tensions, impacting international relations and security dynamics.
 
-Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
+- **European Union's Response**
+  - The EU has played a crucial role in providing support to Ukraine, both through individual member states and collective efforts.
+  - Financial aid and commitments have been made to support Ukraine's military, humanitarian, and economic needs.
 
+- **Purpose of the Analysis**
+  - This analysis aims to evaluate the extent of aid provided by EU countries to Ukraine.
+  - The focus is on financial allocations and commitments, with a breakdown into different types of aid such as military and humanitarian support.
 
-```{r}
+- **Key Questions Addressed**
+  - Which EU countries are the top contributors in terms of financial allocations and commitments to Ukraine and which are the lowest?
+  - How do the types of aid (military vs. humanitarian) vary among the top contributing countries?
+  
+- **Significance of the Analysis**
+  - Understanding the support provided by EU countries helps gauge the international community's efforts in assisting Ukraine.
+  - The analysis sheds light on the strategic and humanitarian priorities of the EU in addressing the ongoing conflict and its repercussions.
 
-rm(list = ls()) # Clean your environment:
-gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
+# The Difference between Financial Allocations and Financial Commitments
+
++ Financial Allocation refers to the funds that have been officially designated or set aside for a specific purpose or  project. In this case, it means the money that has been allocated by EU countries to support Ukraine.An EU country might allocate €1 billion for humanitarian aid to Ukraine, which means this amount is reserved in their budget for this purpose. 
+
++ Financial Commitment refers to the amounts that have been pledged or promised to be delivered in support of Ukraine. These are the funds that countries have committed to providing, which might be part of international agreements or announcements. An EU country might commit €500 million to Ukraine over the next two years for military aid, which means they promise to provide this amount, but it might be delivered in installments. 
+
++ Financial Allocations are usually immediate and part of a current budget. These funds have been set aside and are ready for disbursement.
+Financial Commitments may span over multiple years and indicate future support. These are pledges made to provide aid over a longer period and may require further authorization or legislative approval before they can be fully disbursed.
+
++ Financial Allocations have an immediate impact as they are part of active budgets and can be disbursed quickly.
+Financial Commitments impact planning and international relations, signaling long-term support. They indicate a commitment to future aid, which can influence diplomatic and strategic planning.
+
+```{r setup, echo = FALSE, include=FALSE}
+
+# Load necessary libraries
 library(tidyverse)
-list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+library(knitr)
+library(kableExtra)
+library(dplyr)
+library(xtable)
+library(ggplot2)
+
+#Loading the Data
+
+alloc <- read_csv("data/Ukraine_Aid/Financial_Allocations.csv")
+commit <- read_csv("data/Ukraine_Aid/Financial_Commitments.csv")
+
+# Summarize the data while filtering for only EU countries
+
+source("code/summarise_commitments.R")
+source("code/summarise_allocations.R")
+source("code/top_contributors.R")
+source("code/top_eu_committers.R")
+source("code/build_commit_table.R")
+source("code/build_allocations_table.R")
+source("code/plot_top_humanitarian_allocators.R")
+source("code/plot_top_humanitarian_committers.R")
+source("code/lowest_contributors.R")
+source("code/bottom_eu_committers.R")
+
+alloc_summary <- summarise_allocations(alloc)
+commit_summary <- summarise_commitments(commit)
+
+# Combine summaries and find total for the EU Commissions and Council
+combined_summary <- left_join(alloc_summary, commit_summary, by = "Country")
+
 ```
+
+
+# The Top 5 European Union Allocators
+
+- **Table \ref{tab1}**:
+
+  - Presents a detailed summary of the financial allocations made by EU countries to Ukraine.
+  
+- **EU (Commission and Council)**:
+  - Stands out as the largest contributor, with a total allocation of \$43.83 billion.
+  - Includes significant military support totaling \$34.38 billion.
+  - Notable humanitarian allocation of \$10.49 billion.
+- **Estonia**:
+  - Second-largest contributor with \$29.66 billion.
+  - Primarily focused on humanitarian aid, highlighting its significant commitment to supporting Ukraine.
+- **Other Notable Contributors**:
+  - Italy, Bulgaria, France, and Finland have also contributed various amounts.
+  - France provides the highest military allocation among them at \$10.75 billion.
+- **Total Bilateral Allocation**:
+  - Aggregates these contributions, demonstrating the comprehensive financial support provided directly by each country.
+- **Overall Illustration**:
+  - This table underscores the critical role played by individual EU countries in aiding Ukraine.
+  - Highlights both military and humanitarian efforts.
+
+```{r, top-contributors-allocations, echo=FALSE, fig.align='center', results = 'asis'}
+
+top_eu_contributors <- top_contributors(alloc_summary, top_n = 6)
+
+top_contributors_table <- build_allocations_table(top_eu_contributors, Latex = TRUE)
+
+```
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Top 10 EU Countries Humanitarian Commitments to Ukraine\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Plot top humanitarian aid allocators
+g1 <- plot_top_humanitarian_allocators(alloc_summary, top_n = 10)
+g1
+
+```
+
+# The Top 5 European Commiters
+
+**Table \ref{tab2}**:
+
+  - Summarizes the financial commitments made by EU countries to Ukraine, emphasizing their pledged support.
+  
+- **EU (Commission and Council)**:
+  - Leads with a total commitment of \$71.04 billion.
+  - Indicates long-term financial support with a significant military commitment of \$56.11 billion.
+  
+- **Germany**:
+  - Second-largest contributor with a commitment of \$24.71 billion.
+  - Includes \$19.94 billion for military aid, reflecting its strategic support for Ukraine's defense capabilities.
+  
+- **Other Notable Commitments**:
+  - The Netherlands, Poland, France, and Austria also make notable commitments.
+  - Military commitments form a substantial part of their total contributions.
+  
+- **Overall Illustration**:
+  - This table illustrates the pledged support from various EU countries.
+  - Showcases their readiness to provide ongoing financial and military assistance to Ukraine.
+  - Reflects the strategic and humanitarian priorities of the EU countries in supporting Ukraine amidst ongoing challenges.
+
+```{r, top-commiters, echo=FALSE, fig.align='center', results = 'asis'}
+
+top_committers <- top_eu_committers(commit_summary, top_n = 6)
+
+top_committers_table <- build_commit_table(top_committers, Latex = TRUE)
+
+```
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Top 10 EU Countries Humanitarian Commitments to Ukraine\\label{Figure2}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Plot top humanitarian aid committers
+g2 <- plot_top_humanitarian_committers(commit_summary, top_n = 10)
+g2
+
+```
+
+# Lowest 5 European Allocators
+
+```{r, lowest-allocators, echo=FALSE, fig.align='center', results = 'asis'}
+ 
+lowest_contributions<- lowest_contributors(alloc_summary)
+
+lowest_committers_table <- build_allocations_table(lowest_contributions, Latex = TRUE)
+
+```
+
+# Lowest 5 European Commiters
+
+```{r, lowest-commiters, echo=FALSE, fig.align='center', results = 'asis'}
+
+# Get the bottom 5 committers
+bottom_eu_committment<- bottom_eu_committers(commit_summary, bottom_n = 5)
+
+# Create the table for the bottom 5 committers
+bottom_committers_table <- build_commit_table(bottom_eu_committment, Latex = TRUE)
+
+```
+- **General Observations**:
+  - Both tables highlight countries with minimal total financial allocations and commitments.
+  - Despite low overall contributions, some countries still provide notable military aid.
+
+- **Lowest Allocators**:
+  - These countries have not allocated significant funds to Ukraine in terms of total financial aid.
+  - Cyprus and Denmark stand out with higher military allocations compared to others, despite no total allocation.
+
+- **Lowest Committers**:
+  - Similar to the allocators, these countries show minimal total commitments.
+  - The Czech Republic, although low in total commitment, has a substantial military commitment.
+  - Estonia has a notable total bilateral commitment, suggesting focused aid despite a low overall commitment.
+
+- **Implications**:
+  - These tables help identify the countries with the least financial engagement in supporting Ukraine.
+  - The focus on military aid indicates strategic contributions, even from countries with otherwise low financial involvement.
 
 

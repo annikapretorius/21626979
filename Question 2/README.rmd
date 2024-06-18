@@ -3,7 +3,7 @@
 # Remove comments and add values where applicable.
 # The descriptions below should be self-explanatory
 
-title: "The longevity and Musical Progression of Coldplay versus Metallica"
+title: "The Longevity and Musical Progression of Coldplay versus Metallica"
 #subtitle: "This will appear as Right Header"
 
 documentclass: "elsarticle"
@@ -84,7 +84,7 @@ output:
     fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
     fig_height: 3.5
 abstract: |
-  This article aims to discuss what makes us happy. This is a suggested solution to question 1.
+  This article aims to discuss the longevity and musical progression of two famous bands: Coldplay and Metallica
 ---
 
 
