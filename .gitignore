@@ -54,3 +54,4 @@ Question*/data*
 # Ignore CSV and TXT data files in Question folders
 Question*/*.csv
 Question*/*.txt
+Question*/*.rds
