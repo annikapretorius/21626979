@@ -87,7 +87,7 @@ total_metals_India <- sum(India_medal_summary$Medal_Count)
 
 ```{r, total-metals, echo = FALSE, fig.align='center', results = 'asis'}
 
-table_total_metals <- total_metals_table(filtered_summer_olympics)
+table_total_metals_india_and_others<- total_metals_table(filtered_summer_olympics)
 
 
 ```

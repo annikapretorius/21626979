@@ -472,3 +472,230 @@ bottom_committers_table <- build_commit_table(bottom_eu_committment, Latex = TRU
   - The focus on military aid indicates strategic contributions, even from countries with otherwise low financial involvement.
 
 (in order to get this section with tables to knit, i ensured all the chunk options were correct, all the righ packages were loaded and that my YAML header was appropriate)
+
+##Question 4 Solution 
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(fig.path = 'README_files/figure-latex/')
+
+# Load necessary libraries
+
+library(dplyr)
+library(scales)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+library(xtable)
+library(ggplot2)
+library(broom)
+
+# Source in all your functions:
+list.files('Question_4/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+
+#loading the relevant data 
+Winter<- readRDS("Data/olympics/winter.rds")
+Summer <- readRDS("Data/olympics/summer.rds")
+GDP <- readRDS("Data/olympics/GDP.rds")
+
+source("code/filter_process_summer.R")
+source("code/filter_process_winter.R")
+source("code/summarise_country_medals.R")
+source("code/total_metals_table.R")
+source("code/filter_process_all_countries.R") 
+source("code/find_top_performing_countries.R") 
+source("code/filter_and_combine_all_olympic_data.R") 
+source("code/filter_and_combine_olympic_data_dominators.R") 
+source("code/create_time_series_plot.R") 
+source("code/metrics_data.R")
+source("code/find_and_visualize_top_countries.R")
+source("code/analyze_gender_gold_correlation.R")
+source("code/analyze_top_countries_gender_performance.R")
+source("code/plot_medal_distribution_by_country.R")
+source("code/analyze_archery.R")
+
+filtered_summer_olympics <- filter_process_summer(GDP, Summer)
+
+India_medal_summary <- summarise_country_medals(Summer, "IND") 
+
+#in order to double check our filtering process was successful (yes)
+total_metals_India <- sum(India_medal_summary$Medal_Count)
+
+```
+
+# Analysing the Total Metals Won by India and other Countries 
+
+```{r, total-metals, echo = FALSE, fig.align='center', results = 'asis'}
+
+table_total_metals_india_and_others <- total_metals_table(filtered_summer_olympics)
+
+
+```
+
+# Analysing the Top Countries Dominating both the Summer and Winter Olympics over the Years: A Time-Series Analysis 
+
+## Analysis of Total Medals Over the Years
+
++ The plot displays the total number of medals won by the top 5 countries (GER, SWE, URS, USA) over the years.
++ The data spans from the early 1900s to 2010, showing fluctuations in medal counts for each country.
++ The Soviet Union (URS) exhibits a significant peak in medals won around the 1980s, indicating a period of dominance in   the Olympics.
++ The United States (USA) consistently maintains high medal counts throughout the years, with noticeable peaks and  troughs.
++ Germany (GER) shows an upward trend in medal counts post-1950s, while Sweden (SWE) remains relatively stable with lower medal counts compared to other countries.
++The plot highlights the changing dynamics and competitive landscape of the Olympics, with different countries emerging as dominant forces in different time periods.
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Function to find the top 5 performing countries in the Olympics
+all_countries_medals <- filter_process_all_countries(Summer)
+
+top_performers <- find_top_performing_countries(all_countries_medals, top_n = 10)
+#USA, URS, GBR, FRA, GER, ITA, SWE, HUN, AUS, CHN
+
+filtered_winter <- filter_process_winter(Winter)
+
+top_performers_winter <- find_top_performing_countries(filtered_winter, top_n = 10)
+#Norway, USA, AUT, GER, URS, CAN, FIN, SWE, SUI, RUS 
+
+# Function to filter and combine datasets for countries doing well in both Olympics
+
+dominating_olympic_data_dominators<- filter_and_combine_olympic_data_dominators(Summer, Winter)
+
+times_series_olympic_dominators <- create_time_series_plot(dominating_olympic_data_dominators)
+times_series_olympic_dominators
+
+```
+# The Most Unlikely Top Countries as per GDP Per Capita or by Population 
+
+ **Top 5 Countries by Medals Per Capita**:
+  
+  - **URS (Union of Soviet Socialist Republics)**: Stands out significantly, indicating that the country had a high medal count relative to its population size.
+  
+  - **GDR (German Democratic Republic)**: Also shows a strong performance, punching above its weight in terms of population size. East Germany, officially known as the German Democratic Republic, was a country in Central Europe from its formation on 7 October 1949 until its reunification with West Germany on 3 October 1990.
+  
+  - **ROU (Romania)**: Shows a commendable number of medals won per capita.
+  
+  - **FRG (Federal Republic of Germany)**: Consistently performs well in the Olympic Games, and is referencing West Germany. West Germany[a] is the common English name for the Federal Republic of Germany (FRG)[b] from its formation on 23 May 1949 until the reunification with East Germany on 3 October 1990.
+  
+  - **TCH (Czechoslovakia)**: Displays strong performance relative to its population.
+
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure2}", fig.ext = 'png', fig.height = 3, fig.width = 5}
+
+all_countries_df <- filter_and_combine_all_olympic_data(Summer, Winter)
+
+metrics_data_combined <- metrics_data(all_countries_df, GDP)
+
+#Find and visualize top countries by Medals_Per_Capita
+plot_metals_per_capita <- find_and_visualize_top_countries(metrics_data_combined, "Medals_Per_Capita")
+plot_metals_per_capita 
+
+```
+
+**Top 5 Countries by Medals Per GDP**:
+
+ - **URS (Union of Soviet Socialist Republics)**: Again leads, showing exceptional performance relative to its economic size.
+
+ - **GDR (German Democratic Republic)**: Demonstrates effective use of economic resources in achieving Olympic success.
+
+ - **ROU (Romania)**: Efficiently converts its economic resources into medals.
+ 
+  - **FRG (Federal Republic of Germany)**: Maintains a strong position in terms of medals per GDP.
+
+  - **CUB (Cuba)**: Punches above its weight economically in terms of Olympic success.
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure3}", fig.ext = 'png', fig.height = 3, fig.width = 5}
+
+#Find and visualize top countries by Medals_Per_GDP
+plot_metals_per_GDP  <- find_and_visualize_top_countries(metrics_data_combined, "Medals_Per_GDP")
+plot_metals_per_GDP 
+```
+
+**Similarity in Figures**:
++ The two figures show similar countries leading in both medals per capita and medals per GDP. This similarity suggests that these countries not only excel in their ability to convert population size into Olympic success but also manage their economic resources efficiently to achieve high medal counts. 
+
++ The dominance of URS and GDR in both figures highlights their historical strength in Olympic competitions during the periods they existed, indicating state-sponsored sports programs and a high prioritization of athletic success.
+
++ Countries like Romania (ROU) and the Federal Republic of Germany (FRG) demonstrate consistent performance, reflecting well-organized sports programs that effectively harness both population and economic resources.
+
+# An Analysis of Archery 
+
++ Archery’s history at the Olympic Games is split into two periods: the early era and the modern era.
+
++ The sport featured on the programme of the Olympic Games in 1900, 1904, 1908 and 1920 during the early era. It was also one of the first sports to feature women’s events, in 1904. The competition formats were inconsistent, often based on local rules, and archery was subsequently dropped from the programme. World Archery was founded in 1931 with the goal of rejoining the Games.
+
++ Archery returned to the Olympic Games in 1972 and has remained on the programme ever since. During this modern era, the competition format has evolved toward exciting, easily accessible and broadcast-friendly head-to-head matchplay. Two gold medals, for the individual events, were awarded from 1972 to 1984; team events were added in 1988. 
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Individual Events by Country in Winning Medals in Archery\\label{Figure4}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+archery_plot <- analyze_archery(Summer)
+
+```
+
+## List of Countries in the Figure above 
++ AUS: Australia
++ CHN: China
++ EUN: Unified Team
++ FIN: Finland
++ FRA: France
++ GBR: Great Britain
++ ITA: Italy
++ JPN: Japan
++ KOR: South Korea
++ MEX: Mexico
++ NED: Netherlands
++ POL: Poland
++ RUS: Russia
++ SWE: Sweden
++ UKR: Ukraine
++ URS: Union of Soviet Socialist Republics
++ USA: United States
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "A Pie Chart showcasing the Distibution of Medal Winnings by the Top 5 Countries in Individual Archery Events\\label{Figure5}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+distribution_plot_piechart<- plot_medal_distribution_by_country(Summer)
+
+```
+
++ The pie chart above shows the medal distribution by the top 5 countries in Archery individual events between the years 1900 and 2012. South Korea (KOR) dominates the chart with 46.7% of the total medals, followed by the USA (20%), the Soviet Union (URS) with 15.6%, Japan (JPN) with 8.9%, and China (CHN) with 8.9%.
+
+## Analysing the Performance in Individual Archery Events by Gender
+
++ The multi-panel plot compares the performance in Archery individual events by gender within the top 5 countries (China, Finland, Japan, South Korea, Soviet Union, and the USA) from 1970 to 2010. 
+
++ Each panel represents one of the top countries, showing the total medals won by men and women over the years. 
+
++South Korea (KOR) and the USA display noticeable differences in performance between genders, while other countries like China, Finland, and Japan show consistent performance between men and women.
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure6}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+top_country_gender_plot<- analyze_top_countries_gender_performance(Summer)
+
+```
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure7}", fig.ext = 'png', fig.height = 6, fig.width = 7}
+
+gender_gold_correlation_plot <- analyze_gender_gold_correlation(Summer)
+
+```
+
++ Finally, \ref{Figure6}, determines if there is a correlation between gender and the probability of winning a medal by  fitted a logistic regression model.
+
++ This model helped us predict the probability of winning a gold medal based on gender.
+
++ The x-axis represents the gender (Men and Women).
+
++ The y-axis represents the predicted probability of winning a gold medal.
+
++ Each dot represents a predicted probability from the logistic regression model.
+
++ The predicted probabilities for men are clustered around 0.46, while for women, they are around 0.38.
+This indicates that, historically, men have had a higher probability of winning gold medals in Archery individual events compared to women within the top 10 countries.
+
+
+
+
+
+
+
+
+
