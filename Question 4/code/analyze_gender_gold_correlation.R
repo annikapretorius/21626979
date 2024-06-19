@@ -36,13 +36,13 @@ analyze_gender_gold_correlation <- function(data) {
 
     plot <- ggplot(archery_individual, aes(x = Gender, y = Predicted_Probability, color = Gender)) +
         geom_jitter(width = 0.2, height = 0) +
-        labs(title = "Predicted Probability of Winning a Gold Medal by Gender in Archery",
+        labs(title = "Predicted Probability of Winning a Gold Medal by Gender",
              subtitle = "Archery Individual Events (Top 10 Countries)",
              x = "Gender",
              y = "Predicted Probability") +
         theme_minimal() +
         theme(
-            plot.title = element_text(hjust = 0.5, size = 16),
+            plot.title = element_text(hjust = 0.5, size = 14),
             plot.subtitle = element_text(hjust = 0.5, size = 14),
             axis.title.x = element_text(size = 14),
             axis.title.y = element_text(size = 14),

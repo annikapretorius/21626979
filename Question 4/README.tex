@@ -1,100 +1,139 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-%
-\documentclass[
-  12pt,
-]{elsarticle}
-\usepackage{amsmath,amssymb}
+\documentclass[12pt,preprint, authoryear]{elsarticle}
+
+\usepackage{lmodern}
+%%%% My spacing
 \usepackage{setspace}
-\usepackage{iftex}
-\ifPDFTeX
+\setstretch{1.2}
+\DeclareMathSizes{12}{14}{10}{10}
+
+% Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+
+\let\origtable\table
+\let\endorigtable\endtable
+\renewenvironment{table}[1][2] {
+    \expandafter\origtable\expandafter[H]
+} {
+    \endorigtable
+}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
 \fi
-\usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
-\fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{xcolor}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts}
+
+\def\bibsection{\section*{References}} %%% Make "References" appear before bibliography
+
+
+\usepackage[round]{natbib}
+
+\usepackage{longtable}
+\usepackage[margin=2.3cm,bottom=2cm,top=2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[bottom, hang, flushmargin]{footmisc}
 \usepackage{graphicx}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\usepackage{textcomp}
+\renewcommand{\headrulewidth}{0pt}
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%  Remove the "preprint submitted to" part. Don't worry about this either, it just looks better without it:
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
 \makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-% Set default figure placement to htbp
+
+ \def\tightlist{} % This allows for subbullets!
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=blue,
+            pdfborder={0 0 0}}
+
+
+% The following packages allow huxtable to work:
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+\newenvironment{columns}[1][]{}{}
+
+\newenvironment{column}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
 \makeatletter
-\def\fps@figure{htbp}
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
 \makeatother
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{CSLReferences}%
+  {\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
+  {\par}
+
+
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
 \setcounter{secnumdepth}{5}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+%%% Include extra packages specified by user
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -109,38 +148,102 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
-\hypersetup{
-  pdftitle={A Historical Analysis of the Olympic Games},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
 
-\title{A Historical Analysis of the Olympic Games}
-\author{}
-\date{\vspace{-2.5em}}
+%%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
+%% page layout
+%% paragraphs
+\setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}
+%% floats
+\setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+\setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\intextsep}{14pt plus 0pt minus 0pt}
+\setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+%% maths
+\setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+%% lists
+\setlength{\topsep}{10pt plus 0pt minus 0pt}
+\setlength{\partopsep}{3pt plus 0pt minus 0pt}
+\setlength{\itemsep}{5pt plus 0pt minus 0pt}
+\setlength{\labelsep}{8mm plus 0mm minus 0mm}
+\setlength{\parsep}{\the\parskip}
+\setlength{\listparindent}{\the\parindent}
+%% verbatim
+\setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+
+
 
 \begin{document}
-\maketitle
+
+
+
+\begin{frontmatter}  %
+
+\title{A Historical Analysis of the Olympic Games}
+
+% Set to FALSE if wanting to remove title (for submission)
+
+
+
+
+\author[Add1]{Annika Pretorius (21626979)\footnote{\textbf{Contributions:}
+  \newline \emph{The author would like to thank my viewers in New
+  Dehli.}}}
+\ead{}
+
+
+
+
+
+\address[Add1]{Stellenbosch University}
+
+
 \begin{abstract}
+\small{
 This article aims to discuss interesting historical facts regarding the
 Summer and Winter Olympics, backed by evidence
+}
 \end{abstract}
 
-\setstretch{1.2}
+\vspace{1cm}
+
+
+
+
+
+\vspace{0.5cm}
+
+\end{frontmatter}
+
+
+
+%________________________
+% Header and Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{}
+\lhead{}
+%\rfoot{\footnotesize Page \thepage } % "e.g. Page 2"
+\cfoot{}
+
+%\setlength\headheight{30pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%________________________
+
+\headsep 35pt % So that header does not go over title
+
+
+
+
 \hypertarget{analysing-the-total-metals-won-by-india-and-other-countries}{%
 \section{Analysing the Total Metals Won by India and other
 Countries}\label{analysing-the-total-metals-won-by-india-and-other-countries}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{table\_total\_metals }\OtherTok{\textless{}{-}} \FunctionTok{total\_metals\_table}\NormalTok{(filtered\_summer\_olympics)}
-\end{Highlighting}
-\end{Shaded}
 
 \begingroup\fontsize{11pt}{12pt}\selectfont
 \begin{longtable}{lrrrr}
@@ -176,6 +279,7 @@ Analysis}\label{analysing-the-top-countries-dominating-both-the-summer-and-winte
 Years}\label{analysis-of-total-medals-over-the-years}}
 
 \begin{itemize}
+\tightlist
 \item
   The plot displays the total number of medals won by the top 5
   countries (GER, SWE, URS, USA) over the years.
@@ -191,12 +295,10 @@ Years}\label{analysis-of-total-medals-over-the-years}}
 \item
   Germany (GER) shows an upward trend in medal counts post-1950s, while
   Sweden (SWE) remains relatively stable with lower medal counts
-  compared to other countries.
+  compared to other countries. +The plot highlights the changing
+  dynamics and competitive landscape of the Olympics, with different
+  countries emerging as dominant forces in different time periods.
 \end{itemize}
-
-+The plot highlights the changing dynamics and competitive landscape of
-the Olympics, with different countries emerging as dominant forces in
-different time periods.
 
 \begin{figure}
 
@@ -214,52 +316,29 @@ Population}\label{the-most-unlikely-top-countries-as-per-gdp-per-capita-or-by-po
 \textbf{Top 5 Countries by Medals Per Capita}:
 
 \begin{itemize}
-\tightlist
 \item
-  \textbf{URS (Union of Soviet Socialist Republics)}:
-\end{itemize}
-
-Stands out significantly, indicating that the country had a high medal
-count relative to its population size.
-
-\begin{itemize}
-\tightlist
+  \textbf{URS (Union of Soviet Socialist Republics)}: Stands out
+  significantly, indicating that the country had a high medal count
+  relative to its population size.
 \item
-  \textbf{GDR (German Democratic Republic)}:
-\end{itemize}
-
-Also shows a strong performance, punching above its weight in terms of
-population size. East Germany, officially known as the German Democratic
-Republic, was a country in Central Europe from its formation on 7
-October 1949 until its reunification with West Germany on 3 October
-1990.
-
-\begin{itemize}
-\tightlist
+  \textbf{GDR (German Democratic Republic)}: Also shows a strong
+  performance, punching above its weight in terms of population size.
+  East Germany, officially known as the German Democratic Republic, was
+  a country in Central Europe from its formation on 7 October 1949 until
+  its reunification with West Germany on 3 October 1990.
 \item
-  \textbf{ROU (Romania)}:
-\end{itemize}
-
-Shows a commendable number of medals won per capita.
-
-\begin{itemize}
-\tightlist
+  \textbf{ROU (Romania)}: Shows a commendable number of medals won per
+  capita.
 \item
-  \textbf{FRG (Federal Republic of Germany)}:
-\end{itemize}
-
-Consistently performs well in the Olympic Games, and is referencing West
-Germany. West Germany{[}a{]} is the common English name for the Federal
-Republic of Germany (FRG){[}b{]} from its formation on 23 May 1949 until
-the reunification with East Germany on 3 October 1990.
-
-\begin{itemize}
-\tightlist
+  \textbf{FRG (Federal Republic of Germany)}: Consistently performs well
+  in the Olympic Games, and is referencing West Germany. West
+  Germany{[}a{]} is the common English name for the Federal Republic of
+  Germany (FRG){[}b{]} from its formation on 23 May 1949 until the
+  reunification with East Germany on 3 October 1990.
 \item
-  \textbf{TCH (Czechoslovakia)}:
+  \textbf{TCH (Czechoslovakia)}: Displays strong performance relative to
+  its population.
 \end{itemize}
-
-Displays strong performance relative to its population.
 
 \begin{figure}
 
@@ -281,41 +360,22 @@ Displays strong performance relative to its population.
 \textbf{Top 5 Countries by Medals Per GDP}:
 
 \begin{itemize}
-\tightlist
 \item
-  \textbf{URS (Union of Soviet Socialist Republics)}:
-\end{itemize}
-
-Again leads, showing exceptional performance relative to its economic
-size.
-
-\begin{itemize}
-\tightlist
+  \textbf{URS (Union of Soviet Socialist Republics)}: Again leads,
+  showing exceptional performance relative to its economic size.
 \item
-  \textbf{GDR (German Democratic Republic)}:
-\end{itemize}
-
-Demonstrates effective use of economic resources in achieving Olympic
-success.
-
-\begin{itemize}
-\tightlist
+  \textbf{GDR (German Democratic Republic)}: Demonstrates effective use
+  of economic resources in achieving Olympic success.
 \item
-  \textbf{ROU (Romania)}:
-\end{itemize}
-
-Efficiently converts its economic resources into medals. - \textbf{FRG
-(Federal Republic of Germany)}:
-
-Maintains a strong position in terms of medals per GDP.
-
-\begin{itemize}
-\tightlist
+  \textbf{ROU (Romania)}: Efficiently converts its economic resources
+  into medals.
 \item
-  \textbf{CUB (Cuba)}:
+  \textbf{FRG (Federal Republic of Germany)}: Maintains a strong
+  position in terms of medals per GDP.
+\item
+  \textbf{CUB (Cuba)}: Punches above its weight economically in terms of
+  Olympic success.
 \end{itemize}
-
-Punches above its weight economically in terms of Olympic success.
 
 \begin{figure}
 
@@ -356,21 +416,24 @@ resources efficiently to achieve high medal counts.
 \hypertarget{an-analysis-of-archery}{%
 \section{An Analysis of Archery}\label{an-analysis-of-archery}}
 
-+Archery's history at the Olympic Games is split into two periods: the
-early era and the modern era.
-
-+The sport featured on the programme of the Olympic Games in 1900, 1904,
-1908 and 1920 during the early era. It was also one of the first sports
-to feature women's events, in 1904. The competition formats were
-inconsistent, often based on local rules, and archery was subsequently
-dropped from the programme. World Archery was founded in 1931 with the
-goal of rejoining the Games.
-
-+Archery returned to the Olympic Games in 1972 and has remained on the
-programme ever since. During this modern era, the competition format has
-evolved toward exciting, easily accessible and broadcast-friendly
-head-to-head matchplay. Two gold medals, for the individual events, were
-awarded from 1972 to 1984; team events were added in 1988.
+\begin{itemize}
+\item
+  Archery's history at the Olympic Games is split into two periods: the
+  early era and the modern era.
+\item
+  The sport featured on the programme of the Olympic Games in 1900,
+  1904, 1908 and 1920 during the early era. It was also one of the first
+  sports to feature women's events, in 1904. The competition formats
+  were inconsistent, often based on local rules, and archery was
+  subsequently dropped from the programme. World Archery was founded in
+  1931 with the goal of rejoining the Games.
+\item
+  Archery returned to the Olympic Games in 1972 and has remained on the
+  programme ever since. During this modern era, the competition format
+  has evolved toward exciting, easily accessible and broadcast-friendly
+  head-to-head matchplay. Two gold medals, for the individual events,
+  were awarded from 1972 to 1984; team events were added in 1988.
+\end{itemize}
 
 \begin{figure}
 
@@ -508,5 +571,11 @@ and Japan show consistent performance between men and women.
   men have had a higher probability of winning gold medals in Archery
   individual events compared to women within the top 10 countries.
 \end{itemize}
+
+\bibliography{Tex/ref}
+
+
+
+
 
 \end{document}

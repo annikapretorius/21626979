@@ -4,13 +4,15 @@ output:
     variant: markdown_github
 ---
 
-# Purpose
+```{r}
+usethis:: edit_r_environ()
 
-Purpose of this work folder.
+remotes::install_github("HanjoStudy/dbbasic")
+library(dbbasic)
+conn <- db_connect(db = "psql_datascience")
+DBI::dbDisconnect(conn)
+```
 
-Ideally store a minimum working example data set in data folder.
-
-Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
 
 
 ```{r}

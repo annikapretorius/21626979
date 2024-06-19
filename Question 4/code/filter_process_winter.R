@@ -2,7 +2,7 @@
 filter_process_winter <- function(winter_data) {
 
     # Add the 'Sport Type' column to the data frame
-    team_sports <- c("Ice Hockey", "Bobsleigh", "Curling", "Luge", "Skeleton")
+    team_sports <- c("Ice Hockey", "Bobsleigh", "Curling", "Skeleton")
 
     team_events <- c("Military Patrol", "Four-Man", "Curling", "Ice Hockey", "Pairs", "Two-Man",
                      "Teams", "Team", "4X5 KM Relay", "4X10KM Relay", "Team Sprint",

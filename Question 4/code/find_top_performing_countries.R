@@ -1,5 +1,4 @@
-# Function to find the top 5 performing countries in the Olympics
-find_top_performing_countries <- function(data, top_n = 5) {
+find_top_performing_countries <- function(data, top_n = 10) {
     # Aggregate medal counts by country
     total_medals_by_country <- data %>%
         group_by(Country) %>%

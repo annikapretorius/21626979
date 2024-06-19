@@ -29,11 +29,12 @@ link-citations: TRUE
 
 output:
   pdf_document:
-    keep_tex: true
-#pandoc_args: ["--pdf-engine-opt=-shell-escape"]
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
 abstract: |
   This article aims to discuss interesting historical facts regarding the Summer and Winter Olympics, backed by evidence  
-#highlight: pygments
 ---
 
 ```{r setup, include=FALSE}
@@ -84,7 +85,7 @@ total_metals_India <- sum(India_medal_summary$Medal_Count)
 
 # Analysing the Total Metals Won by India and other Countries 
 
-```{r, total-metals, fig.align='center', results = 'asis'}
+```{r, total-metals, echo = FALSE, fig.align='center', results = 'asis'}
 
 table_total_metals <- total_metals_table(filtered_summer_olympics)
 
@@ -96,15 +97,10 @@ table_total_metals <- total_metals_table(filtered_summer_olympics)
 ## Analysis of Total Medals Over the Years
 
 + The plot displays the total number of medals won by the top 5 countries (GER, SWE, URS, USA) over the years.
- 
 + The data spans from the early 1900s to 2010, showing fluctuations in medal counts for each country.
- 
 + The Soviet Union (URS) exhibits a significant peak in medals won around the 1980s, indicating a period of dominance in   the Olympics.
- 
 + The United States (USA) consistently maintains high medal counts throughout the years, with noticeable peaks and  troughs.
- 
 + Germany (GER) shows an upward trend in medal counts post-1950s, while Sweden (SWE) remains relatively stable with lower medal counts compared to other countries.
- 
 +The plot highlights the changing dynamics and competitive landscape of the Olympics, with different countries emerging as dominant forces in different time periods.
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
@@ -132,29 +128,19 @@ g1
 # The Most Unlikely Top Countries as per GDP Per Capita or by Population 
 
  **Top 5 Countries by Medals Per Capita**:
-
-  - **URS (Union of Soviet Socialist Republics)**: 
   
-Stands out significantly, indicating that the country had a high medal count relative to its population size.
+  - **URS (Union of Soviet Socialist Republics)**: Stands out significantly, indicating that the country had a high medal count relative to its population size.
   
-  - **GDR (German Democratic Republic)**: 
+  - **GDR (German Democratic Republic)**: Also shows a strong performance, punching above its weight in terms of population size. East Germany, officially known as the German Democratic Republic, was a country in Central Europe from its formation on 7 October 1949 until its reunification with West Germany on 3 October 1990.
   
-Also shows a strong performance, punching above its weight in terms of population size. East Germany, officially known as the German Democratic Republic, was a country in Central Europe from its formation on 7 October 1949 until its reunification with West Germany on 3 October 1990.
+  - **ROU (Romania)**: Shows a commendable number of medals won per capita.
   
-  - **ROU (Romania)**: 
+  - **FRG (Federal Republic of Germany)**: Consistently performs well in the Olympic Games, and is referencing West Germany. West Germany[a] is the common English name for the Federal Republic of Germany (FRG)[b] from its formation on 23 May 1949 until the reunification with East Germany on 3 October 1990.
   
-Shows a commendable number of medals won per capita.
-  
-  - **FRG (Federal Republic of Germany)**: 
-  
-  Consistently performs well in the Olympic Games, and is referencing West Germany. West Germany[a] is the common English name for the Federal Republic of Germany (FRG)[b] from its formation on 23 May 1949 until the reunification with East Germany on 3 October 1990.
-  
-  - **TCH (Czechoslovakia)**: 
-  
-Displays strong performance relative to its population.
+  - **TCH (Czechoslovakia)**: Displays strong performance relative to its population.
 
 
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure2}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure2}", fig.ext = 'png', fig.height = 3, fig.width = 5}
 
 all_countries_df <- filter_and_combine_all_olympic_data(Summer, Winter)
 
@@ -168,26 +154,17 @@ g2
 
 **Top 5 Countries by Medals Per GDP**:
 
- - **URS (Union of Soviet Socialist Republics)**:
+ - **URS (Union of Soviet Socialist Republics)**: Again leads, showing exceptional performance relative to its economic size.
 
-Again leads, showing exceptional performance relative to its economic size.
+ - **GDR (German Democratic Republic)**: Demonstrates effective use of economic resources in achieving Olympic success.
 
- - **GDR (German Democratic Republic)**: 
+ - **ROU (Romania)**: Efficiently converts its economic resources into medals.
+ 
+  - **FRG (Federal Republic of Germany)**: Maintains a strong position in terms of medals per GDP.
 
-Demonstrates effective use of economic resources in achieving Olympic success.
+  - **CUB (Cuba)**: Punches above its weight economically in terms of Olympic success.
 
- - **ROU (Romania)**: 
-
-Efficiently converts its economic resources into medals.
-  - **FRG (Federal Republic of Germany)**: 
-  
-Maintains a strong position in terms of medals per GDP.
-
-  - **CUB (Cuba)**: 
-  
-Punches above its weight economically in terms of Olympic success.
-
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure3}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure3}", fig.ext = 'png', fig.height = 3, fig.width = 5}
 
 #Find and visualize top countries by Medals_Per_GDP
 g3 <- find_and_visualize_top_countries(metrics_data_combined, "Medals_Per_GDP")
@@ -202,11 +179,11 @@ g3
 
 # An Analysis of Archery 
 
-+Archery’s history at the Olympic Games is split into two periods: the early era and the modern era.
++ Archery’s history at the Olympic Games is split into two periods: the early era and the modern era.
 
-+The sport featured on the programme of the Olympic Games in 1900, 1904, 1908 and 1920 during the early era. It was also one of the first sports to feature women’s events, in 1904. The competition formats were inconsistent, often based on local rules, and archery was subsequently dropped from the programme. World Archery was founded in 1931 with the goal of rejoining the Games.
++ The sport featured on the programme of the Olympic Games in 1900, 1904, 1908 and 1920 during the early era. It was also one of the first sports to feature women’s events, in 1904. The competition formats were inconsistent, often based on local rules, and archery was subsequently dropped from the programme. World Archery was founded in 1931 with the goal of rejoining the Games.
 
-+Archery returned to the Olympic Games in 1972 and has remained on the programme ever since. During this modern era, the competition format has evolved toward exciting, easily accessible and broadcast-friendly head-to-head matchplay. Two gold medals, for the individual events, were awarded from 1972 to 1984; team events were added in 1988. 
++ Archery returned to the Olympic Games in 1972 and has remained on the programme ever since. During this modern era, the competition format has evolved toward exciting, easily accessible and broadcast-friendly head-to-head matchplay. Two gold medals, for the individual events, were awarded from 1972 to 1984; team events were added in 1988. 
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Individual Events by Country in Winning Medals in Archery\\label{Figure4}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
@@ -252,7 +229,7 @@ g5 <- analyze_top_countries_gender_performance(Summer)
 
 ```
 
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure7}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure7}", fig.ext = 'png', fig.height = 6, fig.width = 7}
 
 g6 <- analyze_gender_gold_correlation(Summer)
 

@@ -55,19 +55,18 @@ filter_process_summer <- function(gdp_data, summer_data) {
     filtered_summer_olympics <- summer_data %>%
         filter(Country %in% combined_countries$Country)
 
-    # Add the 'Sport Type' column to the data frame
     team_sports <- c("Basketball", "Volleyball", "Hockey", "Football", "Handball",
-                     "Rugby", "Waterpolo", "Rowing", "Softball", "Baseball")
+                     "Rugby", "Waterpolo", "Rowing", "Softball", "Baseball", "Curling", "Ice Hockey",
+                     "Bobsleigh", "Luge", "Biathlon")
 
-    team_events <- c("4x100m Relay", "4x400m Relay", "Team Pursuit", "Doubles", "Doubles Badminton",
-                     "50M Army Pistol, Team", "600M Free Rifle, Team", "4X100M Freestyle Relay",
-                     "Foil Team", "Team", "Double Sculls", "470 - Two Person Dinghy", "Team Competition",
-                     "Team (Fita Olympic Round - 70M)", "4X100M Medley Relay", "K-4 1000M (Kayak Four)")
+    team_events <- c("Military Patrol", "Four-Man", "Curling", "Ice Hockey", "Pairs", "Two-Man", "Teams",
+                     "Team", "4X5 KM Relay", "4X10KM Relay", "Team Sprint", "Team Pursuit", "4X10KM Relay",
+                     "Combined (4 Events)", "Five-Man", "Relay", "Team", "Double", "Pairs")
 
-    # Classify Sport_Type
-    filtered_summer_olympics <- filtered_summer_olympics %>%
+    summer_data <- summer_data %>%
         mutate(Sport_Type = ifelse(Sport %in% team_sports, "Team", "Individual")) %>%
         mutate(Sport_Type = ifelse(grepl(paste(team_events, collapse = "|"), Event), "Team", Sport_Type))
+
 
     # Adjust medal counting to count one medal per team event
     adjusted_data <- filtered_summer_olympics %>%
