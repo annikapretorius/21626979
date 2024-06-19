@@ -1,8 +1,11 @@
+#The build_commit_table function is designed to create a formatted table summarizing the financial commitments made by EU countries to Ukraine.
+#It offers the option to generate the table in LaTeX format for inclusion in LaTeX documents or in a more general format using the knitr package.
+
 build_commit_table <- function(data, Latex = TRUE) {
     library(xtable)
     options(xtable.comment = FALSE)
 
-    # Mutate the data frame to include formatted percentages if necessary
+    # Mutate the data frame to include formatted percentages
     Result <- data %>%
         mutate(
             Total_Commitment = round(Total_Commitment, 2),

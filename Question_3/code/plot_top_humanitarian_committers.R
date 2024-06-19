@@ -1,3 +1,6 @@
+#The plot_top_humanitarian_committers function processes the commit_summary data frame to identify and visualize the top n EU countries based on their humanitarian aid commitments.
+#By sorting the data and creating a bar plot, it provides a clear and focused view of the top humanitarian aid committers, highlighting their contributions.
+
 plot_top_humanitarian_committers <- function(commit_summary, top_n = 10) {
     top_committers <- commit_summary %>%
         arrange(desc(Humanitarian_Commitment)) %>%
