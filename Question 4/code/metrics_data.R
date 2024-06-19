@@ -1,4 +1,4 @@
-# Function to calculate metrics
+
 # Function to calculate metrics
 metrics_data <- function(olympic_data, GDP) {
 

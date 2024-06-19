@@ -1,5 +1,5 @@
 # Function to filter and combine datasets for countries doing well in both Olympics
-filter_and_combine_olympic_data <- function(summer_data, winter_data) {
+filter_and_combine_olympic_data_dominators<- function(summer_data, winter_data) {
     # List of countries doing well in both Olympics
     countries_doing_well_in_both <- c("USA", "URS", "GER", "SWE")
 

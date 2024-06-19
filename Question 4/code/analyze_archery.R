@@ -1,28 +1,34 @@
 # Function to analyze Archery individual events
-analyze_archery <- function(data) {
+analyze_archery <- function(summer_data) {
 
-    data <- add_sport_type(data)
+    # Define team sports and events
+    team_sports <- c("Basketball", "Volleyball", "Hockey", "Football", "Handball",
+                     "Rugby", "Waterpolo", "Rowing", "Softball", "Baseball", "Curling", "Ice Hockey",
+                     "Bobsleigh", "Luge", "Biathlon")
+
+    team_events <- c("Military Patrol", "Four-Man", "Curling", "Ice Hockey", "Pairs", "Two-Man", "Teams",
+                     "Team", "4X5 KM Relay", "4X10KM Relay", "Team Sprint", "Team Pursuit", "4X10KM Relay",
+                     "Combined (4 Events)", "Five-Man", "Relay", "Team", "Double", "Pairs")
+
+    # Add Sport_Type to summer_data
+    summer_data <- summer_data %>%
+        mutate(Sport_Type = ifelse(Sport %in% team_sports, "Team", "Individual")) %>%
+        mutate(Sport_Type = ifelse(grepl(paste(team_events, collapse = "|"), Event), "Team", Sport_Type))
+
+    # Filter the dataset for Archery and individual events
+    archery_individual <- summer_data %>%
+        filter(Sport == "Archery" & grepl("Individual", Event))
 
     # Adjust medal counting to count one medal per team event
-    adjusted_data <- data %>%
+    adjusted_data <- archery_individual %>%
         distinct(Year, City, Sport, Athlete, Discipline, Event, Medal, Country, Sport_Type) %>%
         mutate(Medal_Count = ifelse(Sport_Type == "Team", 1, 1))
 
-    # Summarize the total medals per year for each country
-    summary_data <- adjusted_data %>%
-        group_by(Year, Country, Sport, Event, Athlete, Medal) %>%
-        summarise(Total_Medals = sum(Medal_Count), .groups = 'drop')
-
-    # Filter the dataset for Archery and individual events
-    archery_individual <- summary_data %>%
-        filter(Sport == "Archery" & grepl("Individual", Event))
-
     # Summarize medal counts by country
-    archery_medals_by_country <- archery_individual %>%
+    archery_medals_by_country <- adjusted_data %>%
         group_by(Country) %>%
-        summarise(Total_Medals = sum(Total_Medals)) %>%
+        summarise(Total_Medals = sum(Medal_Count), .groups = 'drop') %>%
         arrange(desc(Total_Medals))
-
 
     # Visualize medal counts by country
     plot1 <- ggplot(archery_medals_by_country, aes(x = reorder(Country, -Total_Medals), y = Total_Medals, fill = Country)) +
@@ -33,5 +39,5 @@ analyze_archery <- function(data) {
              y = "Total Medals") +
         theme_minimal()
 
-     print(plot1)
+    print(plot1)
 }

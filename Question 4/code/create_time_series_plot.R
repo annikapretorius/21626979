@@ -14,14 +14,14 @@ create_time_series_plot <- function(data) {
     ggplot(summary_data, aes(x = Year, y = Total_Medals, color = Country)) +
         geom_line(size = 1.2) +
         geom_point(size = 2) +
-        labs(title = "Total Medals Over the Years",
-             x = "Year",
+        labs(title = "The Countries that Dominate in the Summer and Winter Olympics",
+             x = "",
              y = "Total Medals",
              color = "Country") +
         theme_minimal() +
         theme(
-            plot.title = element_text(hjust = 0.5, size = 20),
-            axis.title.x = element_text(size = 14),
+            plot.title = element_text(hjust = 0.5, size = 16),
+            axis.title.x = element_text(size = 12),
             axis.title.y = element_text(size = 14),
             legend.title = element_text(size = 14),
             legend.text = element_text(size = 12)
