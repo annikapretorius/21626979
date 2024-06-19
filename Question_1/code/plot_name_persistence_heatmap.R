@@ -15,11 +15,12 @@ plot_name_persistence_heatmap <- function(girl_df, boy_df) {
     # Combine the data frames
     top_25_names <- bind_rows(top_25_girl_names, top_25_boy_names)
 
-    # Check the data before pivoting
+    #To verify the combined data before performing further operations.
+    # The print statements are used to inspect the first few rows of the combined dataset.
     print("Data before pivoting:")
     print(head(top_25_names))
 
-    # Ensure correct data types and handle missing values explicitly
+    # The replace_na function handles missing values by setting Presence to 0, and distinct removes any duplicate rows.
     top_25_names <- top_25_names %>%
         mutate(Year = as.integer(Year),
                Presence = 1) %>%
@@ -44,7 +45,7 @@ plot_name_persistence_heatmap <- function(girl_df, boy_df) {
                   by = c("Name", "Gender", "Year")) %>%
         replace_na(list(Presence = 0))
 
-    # Heatmap plot to show persistence of the most persistent names
+    # The ggplot function is used to create the heatmap, with geom_tile to create the tiles for each year and name, and scale_fill_gradient to show the intensity of the presence.
     g2 <- expanded_name_persistence %>%
         ggplot(aes(x = Year, y = Name, fill = Presence)) +
         geom_tile(color = "white") +
@@ -55,7 +56,7 @@ plot_name_persistence_heatmap <- function(girl_df, boy_df) {
              y = "Name",
              fill = "Presence") +
         theme_minimal() +
-        theme(axis.text.y = element_text(size = 8))  # Adjust y-axis text size for readability
+        theme(axis.text.y = element_text(size = 8))  # Adjusted y-axis text size for readability
 
     return(g2)
 }

@@ -1,24 +1,6 @@
 # Function to plot the proportion of top 25 baby names over time
 plot_top_25_name_proportions <- function(girl_names_df, boy_names_df) {
 
-    # Function to calculate proportion
-    add_prop <- function(df) {
-        df %>%
-            group_by(Year, Gender) %>%
-            mutate(Proportion = Count / sum(Count)) %>%
-            ungroup()
-    }
-
-    # Function to rank and filter top 25 names
-    rank_and_filter_top_25 <- function(df, count_col) {
-        df %>%
-            group_by(Year) %>%
-            arrange(desc(!!sym(count_col))) %>%
-            mutate(Rank = row_number()) %>%
-            filter(Rank <= 25) %>%
-            ungroup() %>%
-            select(Year, Name, Proportion, Rank)
-    }
 
     # Calculate proportion of babies given a certain name for females and males
     girl_names_df_prop <- add_prop(girl_names_df)
@@ -28,11 +10,12 @@ plot_top_25_name_proportions <- function(girl_names_df, boy_names_df) {
     top_25_girl_names <- rank_and_filter_top_25(girl_names_df_prop, "Count")
     top_25_boy_names <- rank_and_filter_top_25(boy_names_df_prop, "Count")
 
-    # Combine top 25 names for plotting
+    #The bind_rows function combines the datasets, and the mutate function adds a Gender column to differentiate between female and male names.
+
     top_25_names <- bind_rows(top_25_girl_names, top_25_boy_names) %>%
         mutate(Gender = ifelse(Name %in% top_25_girl_names$Name, "Female", "Male"))
 
-    # Plot the proportion of top 25 names over time
+    # The ggplot function is used to create the plot, with geom_line to draw lines for each name's proportion over the years. The facet_wrap function creates separate plots for females and males.
     g <- ggplot(top_25_names, aes(x = Year, y = Proportion, color = Name, group = Name)) +
         geom_line(size = 1) +
         facet_wrap(~ Gender, scales = "free_y") +

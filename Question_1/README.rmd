@@ -1,23 +1,101 @@
 ---
+# IMPORTANT: Change settings here, but DO NOT change the spacing.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: "Analaysing the Persistence and Patterns of Baby Naming Conventions"
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Nico Katzke}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Annika Pretorius"  # First Author - note the thanks message displayed as an italic footnote of first page.
+Ref1: "Stellenbosch University" # First Author's Affiliation
+
+
+CorrespAuthor_1: FALSE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
+
+# Comment out below to remove both. JEL Codes only given if keywords also given.
+# keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
+# JELCodes: "L250 \\sep L100"
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+#nocite: '@*' # Add all items in bibliography, whether cited or not
+# nocite: |  # add specific references that aren't cited
+#  @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.2                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+# header-includes:
+#    - \usepackage{colortbl} # Add additional packages here.
+
 output:
-  md_document:
-    variant: markdown_github
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+abstract: |
+  In this study, we analyze historical baby naming trends in the US from 1910 to 2014, focusing on the influence of cultural factors such as the media and celebrities. Our findings provide insights into the persistence of popular names and the impact of societal trends on naming conventions, aiding a toy design agency in selecting resonant character names for their products.
 ---
 
-#Question 1 Solution 
 
-#explanations of how i made the functions around in my each individual function in the given code folder
+```{r setup, include= FALSE}
 
-```{r setup, include=FALSE}
-
-library(glue)
 library(tidyverse)
 library(stringr)
 library(dplyr)
 library(ggplot2)
 
-# Source in all your functions:
-list.files('Question_1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 
 source("code/filter_and_arrange_baby_names.R")
 source("code/prepare_HBO_data.R")
@@ -29,27 +107,16 @@ source("code/calculate_correlation.R")
 source("code/plot_correlation.R")
 source("code/plot_HBO_name_persistence_summary.R")
 source("code/plot_name_persistence_summary.R")
+source("code/Data_Data_Collating")
 
-#Loading the Data 
-Baby_Names <- readRDS("data/US_Baby_names/Baby_Names_By_US_State.rds")
-charts <- readRDS("Data/US_Baby_names/charts.rds")
-HBO_Titles <- readRDS("Data/US_Baby_names/HBO_titles.rds")
-HBO_Credits <- readRDS("Data/US_Baby_names/HBO_credits.rds")
-
-#Creating Different Datasets for Later Use
-Baby_Names_df<- filter_and_arrange_baby_names(Baby_Names)
-HBO_joined_df <- prepare_HBO_data(HBO_Titles, HBO_Credits)
-combined_result_final_top_25_names <- combine_top_25_names(Baby_Names_df, HBO_joined_df, "Count", "tmdb_popularity")
-
-Girl_Baby_Names_df <- Baby_Names_df %>% filter(Gender == "F")
-Boy_Baby_Names_df <- Baby_Names_df %>% filter(Gender == "M")
-
-
+# Test the function
+data_root <- "Question_1/data/US_Baby_names"
+combined_baby_data <- Data_Collating_RDS(data_root)
 ```
 
-# Analaysing the Persistence and Patterns of Baby Naming Conventions (Plot 1)
+\newpage
 
-Plot Analysis: # Analaysing the Persistence and Patterns of Baby Naming Conventions 
+# Analaysing the Persistence and Patterns of Baby Naming Conventions 
 
 The naming trends of children have long been a subject of fascination and study. Recently, a New York-based kids' toy design agency has expressed interest in leveraging data analytics to understand these trends better. The primary goal is to identify the factors that influence baby names, such as popular movie characters, US presidential candidates, celebrities, and top-ranking songs or artists. By comprehending these patterns, the agency aims to predict which character names might resonate best with children, thereby enhancing the appeal of their toys.
 
@@ -57,8 +124,7 @@ To facilitate this analysis, we have been provided with an extensive dataset of 
 
 One of the key aspects of our analysis involves examining the longevity and persistence of baby names. Specifically, we aim to determine whether popular names tend to persist over time or if they fade away as fleeting trends. A useful method for this investigation is the Spearman rank correlation, which will help us assess the rank similarity of the top 25 most popular boys' and girls' names from one year to the next three years. This will provide insights into whether the trends of popular names have become more or less persistent over the decades, particularly since the 1990s.
 
-Analysing the plot: Figure \ref{Figure1} below shows the total count of baby names per year by gender. The blue line represents male names, while the red line represents female names. This visualization highlights the fluctuations in the popularity of baby names over time, offering a foundation for our deeper analysis of naming trends. 
-
+Figure \ref{Figure1} below shows the total count of baby names per year by gender. The blue line represents male names, while the red line represents female names. This visualization highlights the fluctuations in the popularity of baby names over time, offering a foundation for our deeper analysis of naming trends. 
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Total Count of Baby Names by Gender.\\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 5}
 
@@ -66,10 +132,6 @@ total_baby_names_plot <- plot_total_baby_names_per_year_by_gender(Girl_Baby_Name
 print(total_baby_names_plot )
 
 ```
-to knit i used the following with every figure, adjusting for the name and figure number "{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Total Count of Baby Names by Gender.\\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 5}" 
-
-##Plot 2: 
-
 Figure \ref{Figure2} below illustrates the proportion of the top 25 baby names over time for both female and male names.The horizontal axis represents the years from 1950 to 2014. The vertical axis represents the proportion of babies given a specific name each year. This is calculated as the count of babies with that name divided by the total count of babies for that year.Each line represents a specific name that was in the top 25 for that year. The color of each line corresponds to a different name. The plot is divided into two facets: one for female names and one for male names. This separation helps to compare the trends for female and male names independently.
 
 + Female Names: The left facet shows the proportion trends for the top 25 female names over time. The plot indicates that the popularity of the top names was relatively higher in the past (1950s to 1980s) and has become more evenly distributed in recent years.
@@ -78,12 +140,8 @@ Figure \ref{Figure2} below illustrates the proportion of the top 25 baby names o
 
 The peaks in the plot indicate years when specific names were particularly popular. The valleys indicate years when the popularity of those names decreased. Declining Trends: For both female and male names, the plot shows a general declining trend in the proportion values, indicating that the popularity of top names has become less concentrated over time. This suggests a diversification in naming trends, with a wider variety of names being used in recent years.
 
-
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Proportion of the Top 25 Baby Names and their Persistence Over Time\\label{Figure2}", fig.ext = 'png', fig.height = 4, fig.width = 6}
-
 #The vertical axis represents the proportion of babies given a specific name each year. This is calculated as the count of babies with that name divided by the total count of babies for that year.
-
-#This function visualizes the proportion of the top 25 baby names over time for both females and males. This helps to identify trends, patterns, and the persistence of popular baby names over the years.
 
 top_name_proportions_plot<- plot_top_25_name_proportions(Girl_Baby_Names_df, Boy_Baby_Names_df)
 top_name_proportions_plot
@@ -123,7 +181,6 @@ HBO_name_persistence_plot <- plot_HBO_name_persistence(combined_result_final_top
 HBO_name_persistence_plot
 
 ```
-
 We can see the above persistence is all male names within data regarding movies on HBO over the last few decades. 
 
 # The Persistence of HBO names in the Top Rankings over Time.
@@ -133,7 +190,6 @@ In the Figure \ref{Figure6} below, the name "John" stands out as the most persis
 The distribution of the years in top rankings shows that while some names had a very long presence, there is a gradual decline as we move down the list. Names like "Tom," "Peter," and "Jack," though still significant, have a lesser persistence compared to the top names.
 
 The bar chart effectively highlights the relative persistence of each name, with the length of the bars corresponding to the number of years each name stayed in the top rankings. The use of horizontal bars makes it easy to compare the persistence across different names. This analysis helps in understanding the longevity and popularity of certain names within HBO shows, providing insights into naming trends and cultural influences over the years.
-
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Persistence of HBO names in the top rankings over time.\\label{Figure6}", fig.ext = 'png', fig.height = 4, fig.width = 6}
 
@@ -147,18 +203,9 @@ Now i will analyse the correlation between the persistent boy names within the B
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Correlation Between the Persistence of HBO names and Baby Names.\\label{Figure7}", fig.ext = 'png', fig.height = 4, fig.width = 6}
 
-#This calls the calculate_correlation function, passing in the dataset combined_result_final_top_25_names.The purpose of this function is to calculate the persistence of names in both the baby names and HBO datasets, and then compute the Spearman correlation between these two persistence values.
 result <- calculate_correlation(combined_result_final_top_25_names)
-
-#Now i am extracting the combined_persistence data from the result of the calculate_correlation function.Combined_persistence contains the combined persistence data for both baby names and HBO names, which is necessary for further analysis and plotting.
 combined_persistence <- result$combined_persistence
-
-#This then extracts the correlation_value from the result of the calculate_correlation function. The correlation_value is the computed Spearman correlation between the persistence of baby names and HBO names. It quantifies the strength and direction of the association between the two datasets.
-
 correlation_value <- result$correlation_value
-
-#Finally the plot_correlation function is called, passing in the combined_persistence data and the correlation_value.The plot_correlation function generates a plot that visualizes the relationship between the persistence of baby names and HBO names, and it includes a regression line to illustrate the trend. This helps in visually interpreting the correlation.
-
 correlation_plot <- plot_correlation(combined_persistence, correlation_value)
 
 print(correlation_plot)
@@ -170,5 +217,6 @@ In Figure \ref{Figure7} above the correlation between the persistence of baby na
 
 A positive Spearman correlation value of `r round(correlation_value, 3)`. was calculated, which indicates a moderate positive correlation between the persistence of baby names and HBO names. This suggests that names that tend to be popular for longer periods as baby names are also likely to remain popular in HBO rankings for a significant duration. The blue line represents a linear fit, illustrating the trend of this correlation. While there is some spread in the data, with a number of outliers, the general trend suggests that there is a relationship between the duration of name popularity in both contexts.
 
-##Question 2 Solution
+
+
 
