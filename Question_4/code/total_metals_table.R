@@ -1,3 +1,6 @@
+#The total_metals_table function is designed to create a formatted table summarizing the total medals won by countries.
+#It offers the option to generate the table in LaTeX format for inclusion in LaTeX documents or in a more general format using the knitr package.
+
 # Function to create and print a table for PDF knitting
 total_metals_table <- function(data, Latex = TRUE) {
     library(xtable)
