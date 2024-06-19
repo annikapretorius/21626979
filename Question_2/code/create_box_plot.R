@@ -1,4 +1,5 @@
-# Create a function to generate box plots for comparison
+# Create a function to generate box plots for comparison between the two bands
+
 create_box_plot <- function(data, metric, title) {
     ggplot(data, aes(x = band, y = get(metric), fill = band)) +
         geom_boxplot() +

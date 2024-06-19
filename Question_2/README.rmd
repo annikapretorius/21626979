@@ -140,7 +140,7 @@ g2<- popularity_boxplot(metallica_filtered, xaxis_size = 10, xaxis_rows = 3)
 
 g2
 ```
-As you can see from \ref{Figure2} and \ref{Figure2}, Coldplay and Metallica, despite having very different musical styles, both enjoy massive popularity across their albums. However as seen in \ref{Figure3} below, Coldplay is more popular overall than Metallica. 
+As you can see from \ref{Figure1} and \ref{Figure2}, Coldplay and Metallica, despite having very different musical styles, both enjoy massive popularity across their albums. However as seen in \ref{Figure3} below, Coldplay is more popular overall than Metallica. 
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Comparing both Band's Popularity\\label{Figure3}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 

@@ -1,27 +1,30 @@
-# Define the function to create the popularity box plot for the top 20 albums
+#The popularity_boxplot function is designed to create a visually appealing box plot that compares the popularity of the top 20 albums based on their median popularity scores.
+
 popularity_boxplot <- function(data, xaxis_size = 10, xaxis_rows = 3) {
 
-    # Summarize the median popularity and create a summary data frame
+    # The function groups the data by album, calculates the median popularity for each album, arranges the albums in descending order of median popularity, and selects the top 20 albums.
+    # This helps in focusing on the most popular albums for the visualization.
     dfplot <- data %>%
         group_by(album) %>%
         summarise(popularity = median(popularity, na.rm = TRUE)) %>%
         arrange(desc(popularity)) %>%
         slice_head(n = 20)  # Select the top 20 most popular albums
 
-    # Filter the dataset to include only the top 20 most popular albums
+    #The function filters the original dataset to keep only the rows corresponding to the top 20 albums identified in the previous step.
     data <- data %>%
         filter(album %in% dfplot$album)
 
-    # Adjust the order of the albums based on median popularity
+    # The function arranges the albums in the order of their median popularity to ensure a logical and visually appealing presentation in the plot.
     order <- dfplot %>% arrange(popularity) %>% pull(album)
     data <- data %>%
         mutate(album = factor(album, levels = order))
 
-    # Create a color palette with sufficient colors
+    # Creates a color palette with lots of colours
     palette_size <- length(unique(data$album))
     color_palette <- colorRampPalette(brewer.pal(8, "Dark2"))(palette_size)
 
-    # Create the box plot for popularity by album with a dark theme
+    # The function uses ggplot2 to create a box plot that displays the distribution of popularity scores for each album.
+    #It applies a dark theme for visual aesthetics, just like in the question, and includes labels and captions, and adjusts the appearance of various plot elements to enhance readability.
     g <- ggplot(data, aes(x = album, y = popularity, fill = album)) +
         geom_boxplot(outlier.color = "white", outlier.size = 1.5) +  # Adjust outlier points
         labs(title = "Popularity by Album", y = "Popularity", x = "Album", caption = "Data source: Spotify") +

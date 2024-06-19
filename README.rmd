@@ -172,3 +172,107 @@ A positive Spearman correlation value of `r round(correlation_value, 3)`. was ca
 
 ##Question 2 Solution
 
+```{r setup, include=FALSE}
+
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+library(tidyverse)
+
+list.files('Question_2/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+
+#Loading the Data
+coldplay <- read_csv("Data/Coldplay_vs_Metallica/Coldplay.csv")
+metallica <- read_csv("Data/Coldplay_vs_Metallica/metallica.csv")
+spotify <- readRDS("Data/Coldplay_vs_Metallica/Broader_Spotify_Info.rds")
+billboard_100 <- readRDS("Data/Coldplay_vs_Metallica/charts.rds")
+
+#Filtering the data so only studio produced songs are present
+coldplay_filtered <- filter_coldplay_data(coldplay)
+
+metallica_filtered <- filter_metallica_data(metallica)
+
+# Combine the datasets for comparison
+combined_band_data <- bind_rows(coldplay_filtered, metallica_filtered)
+
+```
+
+# An Analysis of the Music Industry \label{An Analysis of the Music Industry}
+
+Coldplay and Metallica are two iconic bands that have left an indelible mark on the music industry. Coldplay, known for its atmospheric soundscapes and introspective lyrics, has captivated audiences worldwide since its debut in the early 2000s. In contrast, Metallica's powerful riffs and intense performances have made them a staple in the heavy metal genre since the 1980s. This project aims to compare the performance of these two bands using data from the Billboard Top 100 and Spotify, providing insights into their popularity and influence over time.
+
+The analysis focuses on several key variables within the datasets. From the Billboard Top 100, we examine metrics such as the number of songs each band has placed in the Top 100, the peak rank achieved by these songs, and the total number of weeks they have remained on the chart. These metrics offer a comprehensive view of each band's commercial success and longevity in the music charts. On Spotify, we analyze the number of streams and popularity scores of their songs, providing a modern perspective on their relevance in the current digital music landscape. By comparing these variables, we can gain a deeper understanding of how Coldplay and Metallica have evolved over time and how their music continues to resonate with audiences today.
+
+
+# Comparisons of the Bands Popularity\label{Comparisons of the Bands Popularity}
+
+
+Coldplay and Metallica, though distinct in their musical styles, both enjoy significant popularity across their albums. Popularity in the figures below measure the popularity of the albums ranging form 0 to 100. The Data source from which this was taken is from spotify
+
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Coldplay's Popularity per Album.\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+boxplot_popularity_coldplay<- popularity_boxplot(coldplay_filtered, xaxis_size = 10, xaxis_rows = 3)
+
+boxplot_popularity_coldplay
+
+```
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Metallica's Popularity per Album.\\label{Figure2}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+popularity_boxplot_metallica<- popularity_boxplot(metallica_filtered, xaxis_size = 10, xaxis_rows = 3)
+
+popularity_boxplot_metallica
+```
+As you can see from \ref{Figure1} and \ref{Figure2}, Coldplay and Metallica, despite having very different musical styles, both enjoy massive popularity across their albums. However as seen in \ref{Figure3} below, Coldplay is more popular overall than Metallica. 
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Comparing both Band's Popularity\\label{Figure3}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+both_band_boxplot<- create_box_plot(combined_band_data, "popularity", "Popularity Comparison: Coldplay vs Metallica")
+both_band_boxplot
+
+```
+
+# Density Plot of Popularity:
+
+The density plot reveals the distribution of song popularity for Coldplay and Metallica. Coldplay's songs tend to have a more uniform distribution with a slight peak, indicating a consistent level of popularity across their catalog. Metallica, on the other hand, shows a more pronounced peak, suggesting that a significant number of their songs reach higher popularity scores. This contrast highlights how Metallica has a core set of extremely popular tracks, while Coldplay's popularity is more evenly spread across their discography. This plot helps us understand the different ways in which each band's music resonates with their listeners.
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Density Plot of Popularity\\label{Figure4}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+#This function is designed to create a density plot that visualizes the distribution of a specified metric for Coldplay and Metallica. This helps to compare how the values of the given metric (e.g., popularity, energy, danceability) are distributed for each band.
+
+density_plot_bands <- combined_density_plot(combined_band_data, "popularity", "Density Plot of Popularity: Coldplay vs Metallica")
+density_plot_bands
+
+```
+# Scatter Plot of Energy vs Danceability:
+
+The scatter plot of energy versus danceability, \ref{Figure5}, offers an insightful comparison between Coldplay and Metallica's musical styles. Coldplay's songs generally cluster towards the higher end of danceability, reflecting their melodic and rhythmic compositions designed to be both catchy and uplifting. In contrast, Metallica's tracks tend to score higher on energy but lower on danceability, showcasing their intense sound that's characteristic of heavy metal. This scatter plot effectively illustrates the distinct musical signatures of each band, highlighting Coldplay's tendency towards more danceable tunes and Metallica's focus on high-energy, powerful performances.
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Energy versus Danceability\\label{Figure5}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+#This function is designed to create a scatter plot that visualizes the relationship between two specified metrics for Coldplay and Metallica. This helps compare how these metrics (e.g., like I did here energy and danceability) correlate for each band.
+
+scatterplot_danceability_energy <- combined_scatter_plot(combined_band_data, "energy", "danceability", "Energy vs Danceability: Coldplay vs Metallica")
+scatterplot_danceability_energy
+
+```
+# Analysing the Billboard Top 100
+
+Coldplay and Metallica have both spent a lot of time on the Billboard Top 100, showing their lasting popularity. Coldplay's songs, with their emotional and melodic style, have kept them on the charts for many weeks. Metallica's powerful and energetic tracks have also secured them a strong presence, especially in the rock and metal genres. The bar plot below clearly shows that while both bands have had substantial success, their chart performance underscores their ability to engage listeners and sustain their popularity over extended periods. This analysis provides a compelling visual representation of the lasting impact both bands have had on the music industry.
+
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Billboard 100s Results for both bands\\label{Figure6}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+# Filter the Billboard dataset for Coldplay and Metallica
+billboard_filtered_data <- filter_billboard_for_bands(billboard_100)
+
+#This function is designed to create a bar plot that visualizes the total number of weeks Coldplay and Metallica have spent on the Billboard Top 100. This helps compare the overall chart presence of each band.
+
+billboard_boxplot <- bar_plot_billboard_weeks(billboard_filtered_data)
+billboard_boxplot
+
+```
+# Conclusion
+
+In conclusion, Coldplay and Metallica have demonstrated remarkable longevity and musical progression over the years. Coldplay's ability to evolve their sound while maintaining their signature emotional and melodic style has kept them relevant and popular. Similarly, Metallica's consistent delivery of powerful, energetic music has solidified their place in the heavy metal genre. Both bands have shown that they can adapt and thrive in the ever-changing music industry, securing a lasting legacy through their continuous presence on the charts and streaming platforms.

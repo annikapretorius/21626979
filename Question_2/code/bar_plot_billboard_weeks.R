@@ -2,7 +2,7 @@
 bar_plot_billboard_weeks <- function(data) {
 
     # Summarize the total weeks on board for each band
-    total_weeks <- billboard_filtered %>%
+    total_weeks <- billboard_filtered_data %>%
         group_by(band) %>%
         summarise(total_weeks = sum(weeks_on_board, na.rm = TRUE))
 
