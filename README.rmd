@@ -585,7 +585,8 @@ table_total_metals_india_and_others <- total_metals_table(filtered_summer_olympi
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-# Function to find the top 5 performing countries in the Olympics
+# This function is designed to process Olympic medal data, distinguishing between team and individual sports/events, and adjusting medal counts accordingly. The function then aggregates the total medals by country.
+
 all_countries_medals <- filter_process_all_countries(Summer)
 
 top_performers <- find_top_performing_countries(all_countries_medals, top_n = 10)
@@ -596,9 +597,12 @@ filtered_winter <- filter_process_winter(Winter)
 top_performers_winter <- find_top_performing_countries(filtered_winter, top_n = 10)
 #Norway, USA, AUT, GER, URS, CAN, FIN, SWE, SUI, RUS 
 
-# Function to filter and combine datasets for countries doing well in both Olympics
+
+#The filter_and_combine_olympic_data_dominators function is designed to filter and combine datasets for countries that perform well in both the Summer and Winter Olympics. It also categorizes sports/events as either team or individual sports.
 
 dominating_olympic_data_dominators<- filter_and_combine_olympic_data_dominators(Summer, Winter)
+
+#The create_time_series_plot function is designed to create a time series plot showing the total number of medals won by different countries over the years in both the Summer and Winter Olympics. The plot visualizes the performance of countries over time.
 
 times_series_olympic_dominators <- create_time_series_plot(dominating_olympic_data_dominators)
 times_series_olympic_dominators
@@ -624,6 +628,8 @@ times_series_olympic_dominators
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure2}", fig.ext = 'png', fig.height = 3, fig.width = 5}
 
 all_countries_df <- filter_and_combine_all_olympic_data(Summer, Winter)
+
+#This metrics_data function is designed to calculate performance metrics for countries based on their Olympic medals, population, and GDP per capita. The metrics calculated include medals per capita and medals per GDP.
 
 metrics_data_combined <- metrics_data(all_countries_df, GDP)
 

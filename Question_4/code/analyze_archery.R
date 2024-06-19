@@ -1,4 +1,7 @@
-# Function to analyze Archery individual events
+# The analyze_archery function processes the Summer Olympics data to filter Archery individual events,
+# counts the medals won by each country, and visualizes the total medals in a bar plot. It categorizes sports as team or individual,
+#adjusts for duplicate rows, and summarizes the data to provide insights into the performance of countries in Archery individual events.
+
 analyze_archery <- function(summer_data) {
 
     # Define team sports and events

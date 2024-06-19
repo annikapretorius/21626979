@@ -1,4 +1,6 @@
-# Function to filter and combine datasets for countries doing well in both Olympics
+# The filter_and_combine_olympic_data_dominators function processes Olympic medal data by filtering for countries that perform well in both the Summer and Winter Olympics. It then combines the filtered datasets and categorizes sports/events as either team or individual sports.
+#The function ensures accurate filtering and categorization, making it suitable for analysis and reporting on countries that dominate in both Olympics.
+
 filter_and_combine_olympic_data_dominators<- function(summer_data, winter_data) {
     # List of countries doing well in both Olympics
     countries_doing_well_in_both <- c("USA", "URS", "GER", "SWE")

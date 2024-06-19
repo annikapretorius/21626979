@@ -1,3 +1,6 @@
+#The filter_process_all_countries function processes Olympic medal data by distinguishing between team and individual sports/events and adjusting medal counts accordingly. It then aggregates the total medals by country and reshapes the data to provide a summary of medals won by each country.
+#The function ensures accurate counting and categorization of medals, making it suitable for analysis and reporting.
+
 filter_process_all_countries <- function(summer_data) {
     # Define team sports and team events
     team_sports <- c("Basketball", "Volleyball", "Hockey", "Football", "Handball",

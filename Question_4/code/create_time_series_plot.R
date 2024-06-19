@@ -1,4 +1,7 @@
 # Function to create a time series plot of medals over the years
+#function processes Olympic medal data to create a time series plot that visualizes the total number of medals won by different countries over the years.
+#The function adjusts for team events, summarizes the total medals per year, and uses ggplot2 to generate a customized and informative plot, suitable for analyzing and presenting the performance trends of countries in the Olympics.
+
 create_time_series_plot <- function(data) {
     # Adjust medal counting to count one medal per team event
     adjusted_data <- data %>%
