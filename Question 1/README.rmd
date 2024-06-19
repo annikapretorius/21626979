@@ -92,7 +92,16 @@ abstract: |
 
 library(tidyverse)
 library(stringr)
+library(dplyr)
+
 list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+
+source("code/filter_and_arrange_baby_names.R")
+source("code/prepare_HBO_data.R")
+source("code/combine_top_25_names.R")
+source("code/plot_total_baby_names_per_year_by_gender.R")
+source("code/plot_top_25_name_proportions.R")
+source("code/plot_name_persistence_heatmap.R")
 
 #Loading the Data and Creating Different Datasets for Later Use
 Baby_Names <- readRDS("Data/US_Baby_names/Baby_Names_By_US_State.rds")
@@ -106,7 +115,6 @@ combined_result_final_top_25_names <- combine_top_25_names(Baby_Names_df, HBO_jo
 
 Girl_Baby_Names_df <- Baby_Names_df %>% filter(Gender == "F")
 Boy_Baby_Names_df <- Baby_Names_df %>% filter(Gender == "M")
-
 
 ```
 
@@ -134,14 +142,10 @@ The figure above illustrates the proportion of the top 25 baby names over time f
 
 The peaks in the plot indicate years when specific names were particularly popular. The valleys indicate years when the popularity of those names decreased. Declining Trends: For both female and male names, the plot shows a general declining trend in the proportion values, indicating that the popularity of top names has become less concentrated over time. This suggests a diversification in naming trends, with a wider variety of names being used in recent years.
 
-#Analysing the Time Series Plot
+#Analysing the Persistence of Names over Time: A Time Series Analysis
 
 
 ```{r}
-library(dplyr)
-library(tidyverse)
-library(stringr)
-
 # Find common names between Baby Names and HBO Titles
 common_names <- combined_result_final %>%
     filter(!is.na(Name_BabyNames) & !is.na(Name_HBO) & Name_BabyNames == Name_HBO) %>%
@@ -157,119 +161,34 @@ rank_correlation <- combined_result_final %>%
 ```
 
 
-```{r}
-Top_25_Girl_names <- Top_25_Girl_names %>%
-  mutate(Gender = "F")
+```{r,  echo = FALSE, warning =  TRUE, fig.align = 'center', fig.cap = "The Proportion of the Top 25 Baby Names and their Persistence Over Time for both Genders\\label{Figure3}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-Top_25_Boy_names <- Top_25_Boy_names %>%
-  mutate(Gender = "M")
-
-# Combine the data frames
-Top_25_names <- bind_rows(Top_25_Girl_names, Top_25_Boy_names)
-
-# Create a data frame indicating presence in top 25
-name_persistence <- Top_25_names %>%
-  mutate(Presence = 1) %>%  # Add a column to indicate presence
-  select(Year, Name, Gender, Presence) %>%
-  pivot_wider(names_from = Year, values_from = Presence, values_fill = 0) %>%
-  pivot_longer(cols = -c(Name, Gender), names_to = "Year", values_to = "Presence") %>%
-  mutate(Year = as.integer(Year))
-
-# Identify the most persistent names
-persistent_names <- name_persistence %>%
-  group_by(Name, Gender) %>%
-  summarize(TotalPresence = sum(Presence), .groups = 'drop') %>%
-  arrange(desc(TotalPresence)) %>%
-  group_by(Gender) %>%
-  top_n(10, TotalPresence) %>%
-  pull(Name)
-
-# Filter the name_persistence dataframe to include only the most persistent names
-filtered_name_persistence <- name_persistence %>%
-  filter(Name %in% persistent_names)
-
-# Heatmap plot to show persistence of the most persistent names
-g1 <- filtered_name_persistence %>% ggplot(aes(x = Year, y = Name, fill = Presence)) +
-  geom_tile(color = "white") +
-  scale_fill_gradient(low = "white", high = "blue") +
-  facet_wrap(~ Gender, scales = "free_y") +
-  labs(title = "Persistence of Top Baby Names Over Time",
-       x = "Year",
-       y = "Name",
-       fill = "Presence") +
-  theme_minimal() +
-  theme(axis.text.y = element_text(size = 8))  # Adjust y-axis text size for readability
-
-g1
-
-```
-
-
-Summarizing how long each name stayed in top 25 
-```{r}
-# Summarize the number of years each name stayed in the top 25
-name_persistence_summary <- name_persistence %>%
-  group_by(Name, Gender) %>%
-  summarize(BabyNamesYearsInTop25 = sum(Presence), .groups = 'drop') %>%
-  arrange(desc(BabyNamesYearsInTop25))
-
-# Filter the name_persistence_summary dataframe to include only the most persistent names
-filtered_summary <- name_persistence_summary %>%
-  group_by(Gender) %>%
-  top_n(10, BabyNamesYearsInTop25)
-
-
-# Bar plot to show the number of years each name stayed in the top 25
-g2 <- filtered_summary %>% ggplot(aes(x = reorder(Name, BabyNamesYearsInTop25), y = BabyNamesYearsInTop25, fill = Gender)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  coord_flip() +
-  labs(title = "Number of Years in Top 25 Baby Names",
-       x = "Name",
-       y = "Years in Top 25",
-       fill = "Gender") +
-  theme_minimal() +
-  theme(axis.text.y = element_text(size = 8)) 
+g2 <- plot_name_persistence_heatmap(Girl_Baby_Names_df, Boy_Baby_Names_df)
 g2
+
+```
+The figure above showcases the persistence of the most popular baby names from a given dataset. The color gradient from white to blue represents the presence of a name in the top 25 baby names for each year, with darker shades of blue indicating higher persistence. Notable names such as "Jessica," "Jennifer," and "Emily" show strong persistence over the years, particularly in the 1980s and 1990s.
+Names like "Susan" and "Mary" were more popular in earlier decades, while "Ashley" and "Amanda" gained popularity later on.Names like "Robert," "Michael," and "John" demonstrate strong persistence, especially from the 1960s to the 2000s.
+Other names such as "Matthew," "Joshua," and "Joseph" show high presence in the top 25 names in the 1980s and 1990s.
+Male names show more consistent presence over a longer period compared to female names, which exhibit more variation and changes over the years.
+
+#Analyzing how long each name stayed in top 25 
+
+```{r,  echo = FALSE, warning =  TRUE, fig.align = 'center', fig.cap = "The Number of Years the Top 25 Baby Names Persisted Over Time for both Genders\\label{Figure4}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+
+g3 <- plot_name_persistence_summary(Girl_Baby_Names_df, Boy_Baby_Names_df)
+g3
+
 ```
 
-We can therefore see that the top boy names over the last few decades illustrate significant persistence in comparison to that of girl names, therefore, we will further analyse factors influencing girl names as they display significantly higher variability which could be linked to alternate factors. Additionally, this is found in figure 2 whereby we see the persistence for girls is roughly a similar number of years except for Elizabeth. 
+We can therefore see that the top boy names over the last few decades illustrate significant persistence in comparison to that of girl names, therefore, we will further analyse factors influencing girl names as they display significantly higher variability which could be linked to alternate factors.  
 
-```{r}
+#Analysing the HBO Dataset
+```{r,  echo = FALSE, warning =  TRUE, fig.align = 'center', fig.cap = "The Number of Years the Top 25 Baby Names Persisted Over Time for both Genders\\label{Figure5}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-# Create a data frame indicating presence in top 25
-name_persistence_HBO <- Top_25_HBO_names %>%
-  mutate(Presence = 1) %>%
-  select(Year, Name, Presence) %>%
-  pivot_wider(names_from = Year, values_from = Presence, values_fill = 0) %>%
-  pivot_longer(cols = -Name, names_to = "Year", values_to = "Presence") %>%
-  mutate(Year = as.integer(Year))
 
-# Identify the most persistent names
-persistent_names_HBO <- name_persistence_HBO %>%
-  group_by(Name) %>%
-  summarize(TotalPresence = sum(Presence), .groups = 'drop') %>%
-  arrange(desc(TotalPresence)) %>%
-  top_n(10, TotalPresence) %>%
-  pull(Name)
-
-# Filter the name_persistence_HBO dataframe to include only the most persistent names
-filtered_name_persistence_HBO <- name_persistence_HBO %>%
-  filter(Name %in% persistent_names_HBO)
-
-# Heatmap plot to show persistence of the most persistent names
-g3 <- filtered_name_persistence_HBO %>% 
-  ggplot(aes(x = Year, y = Name, fill = Presence)) +
-  geom_tile(color = "white") +
-  scale_fill_gradient(low = "white", high = "blue") +
-  labs(title = "Persistence of Top HBO Names Over Time",
-       x = "Year",
-       y = "Name",
-       fill = "Presence") +
-  theme_minimal() +
-  theme(axis.text.y = element_text(size = 8))
-
-# Display the plot
-g3
+g4 <- plot_HBO_name_persistence(combined_result_final_top_25_names)
+g4
 
 ```
 We can see the above persistence is all male names 
