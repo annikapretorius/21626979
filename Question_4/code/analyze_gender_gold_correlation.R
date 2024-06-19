@@ -21,7 +21,7 @@ analyze_gender_gold_correlation <- function(data) {
     archery_individual <- archery_individual %>%
         mutate(Won_Gold = ifelse(Medal == "Gold", 1, 0))
 
-    # Fit a logistic regression model
+    # Fits a generalized linear model with Won_Gold as the response variable and Gender as the predictor, using the binomial family for logistic regression.
     model <- glm(Won_Gold ~ Gender, data = archery_individual, family = binomial)
 
     # Summarize the model results

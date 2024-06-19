@@ -56,4 +56,5 @@ plot_medal_distribution_by_country <- function(summer_data) {
     print(plot3)
 }
 
-
+#It categorizes sports as team or individual, adjusts for duplicate rows,
+#and creates a visually appealing plot to provide insights into the performance of the top 5 countries in Archery individual events.

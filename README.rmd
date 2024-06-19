@@ -679,6 +679,8 @@ plot_metals_per_GDP
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Individual Events by Country in Winning Medals in Archery\\label{Figure4}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
+#The analyze_archery function is designed to analyze the performance of countries in Archery individual events at the Summer Olympics. It processes the data to filter Archery individual events, counts the medals, and visualizes the total medals by country.
+
 archery_plot <- analyze_archery(Summer)
 
 ```
@@ -706,6 +708,8 @@ archery_plot <- analyze_archery(Summer)
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "A Pie Chart showcasing the Distibution of Medal Winnings by the Top 5 Countries in Individual Archery Events\\label{Figure5}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
+#The plot_medal_distribution_by_country function is designed to visualize the distribution of medals won by the top 5 countries in Archery individual events at the Summer Olympics. It processes the data to filter Archery individual events, counts the medals, and creates a pie chart to display the distribution.
+
 distribution_plot_piechart<- plot_medal_distribution_by_country(Summer)
 
 ```
@@ -724,6 +728,8 @@ distribution_plot_piechart<- plot_medal_distribution_by_country(Summer)
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure6}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
+#The analyze_top_countries_gender_performance function is designed to analyze and visualize the performance of the top countries in Archery individual events at the Summer Olympics, broken down by gender. It processes the data to filter Archery individual events, counts the medals, identifies the top countries, and creates a line plot to display the performance over the years. 
+
 top_country_gender_plot<- analyze_top_countries_gender_performance(Summer)
 
 ```
@@ -731,6 +737,8 @@ top_country_gender_plot<- analyze_top_countries_gender_performance(Summer)
 ##Plot 7:
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure7}", fig.ext = 'png', fig.height = 6, fig.width = 7}
+
+#The analyze_gender_gold_correlation function is designed to analyze the correlation between gender and the likelihood of winning a gold medal in Archery individual events at the Summer Olympics. It filters the data, identifies the top countries, creates a binary outcome variable, fits a logistic regression model, and visualizes the predicted probabilities.
 
 gender_gold_correlation_plot <- analyze_gender_gold_correlation(Summer)
 
