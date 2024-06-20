@@ -377,10 +377,6 @@ Financial Commitments impact planning and international relations, signaling lon
 
 # The Top 5 European Union Allocators of Aid to the Ukraine
 
-- **Table \ref{tab1}**:
-
-  - Presents a detailed summary of the financial allocations made by EU countries to Ukraine, with the first column a reference to the total amount allocated by the EU. 
-  
 - **EU (Commission and Council)**:
   - Stands out as the largest contributor, with a total allocation of \$43.83 billion.
   - Includes significant military support totaling \$34.38 billion.
@@ -408,6 +404,9 @@ top_eu_contributors <- top_contributors(alloc_summary, top_n = 6)
 top_contributors_table <- build_allocations_table(top_eu_contributors, Latex = TRUE)
 
 ```
+
+Table 2.1 above presents a detailed summary of the financial allocations made by EU countries to Ukraine, with the first column a reference to the total amount allocated by the EU. 
+
 ##Plot 1: 
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Top 10 EU Countries Humanitarian Allocations to Ukraine\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
@@ -420,10 +419,6 @@ top_humanitarian_allocators_eu
 ```
 # The Top 5 European Countries in terms of Financial Commitment 
 
-**Table \ref{tab2}**:
-
-  - Summarizes the financial commitments made by EU countries to Ukraine, emphasizing their pledged support.
-  
 - **EU (Commission and Council)**:
   - Leads with a total commitment of \$71.04 billion.
   - Indicates long-term financial support with a significant military commitment of \$56.11 billion.
@@ -452,6 +447,8 @@ top_committers <- top_eu_committers(commit_summary, top_n = 6)
 top_committers_table <- build_commit_table(top_committers, Latex = TRUE)
 
 ```
+Table 3.1 above summarizes the financial commitments made by EU countries to Ukraine, emphasizing their pledged support.
+
 ##Plot 2: 
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Top 10 EU Countries Humanitarian Commitments to Ukraine\\label{Figure2}", fig.ext = 'png', fig.height = 5, fig.width = 7}

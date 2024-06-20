@@ -5,7 +5,7 @@ Thesis_FP: FALSE
 AddTitle: TRUE
 Author1: "Annika Pretorius (21626979)^[__Contributions:__  \\newline _The producer of “From Russia With No Love” for the data provided._]"
 Ref1: "Australian News Presenter"
-CorrespAuthor_1: TRUE
+CorrespAuthor_1: FALSE
 BottomRFooter: "\\footnotesize Page \\thepage"
 addtoprule: TRUE
 addfootrule: TRUE
@@ -33,11 +33,10 @@ abstract: |
   This article aims to discuss whether European countries have aided Ukraine in the war against Russia. 
 ---
 
-
-# Introduction 
+# Introduction
 
 - **Background of the Russia-Ukraine Conflict**
-  - The conflict between Russia and Ukraine escalated in 2014 with Russia's annexation of Crimea and support for separatist movements in Eastern Ukraine.
+  - The conflict between Russia and Ukraine escalated in 2014 with Russia's annexation of Crimea and support for separatist movements in Eastern Ukraine. Since Russia’s full-scale invasion in 2022, its war against Ukraine has had a disastrous impact on civilian life, killing thousands of civilians, injuring many thousands more, and destroying civilian property and infrastructure.
   
   - The conflict has led to significant humanitarian crises and geopolitical tensions, impacting international relations and security dynamics.
 
@@ -108,10 +107,6 @@ combined_summary <- left_join(alloc_summary, commit_summary, by = "Country")
 
 # The Top 5 European Union Allocators of Financial Aid to the Ukraine
 
-- **Table \ref{tab1}**:
-
-  - Presents a detailed summary of the financial allocations made by EU countries to Ukraine, with the first column a reference to the total amount allocated by the EU. 
-  
 - **EU (Commission and Council)**:
   - Stands out as the largest contributor, with a total allocation of \$43.83 billion.
   - Includes significant military support totaling \$34.38 billion.
@@ -135,7 +130,8 @@ top_eu_contributors<- top_contributors(alloc_summary, top_n = 6)
 top_contributors_table <- build_allocations_table(top_eu_contributors, Latex = TRUE)
 
 ```
-
+ Table 2.1 above presents a detailed summary of the financial allocations made by EU countries to Ukraine, with the first column a reference to the total amount allocated by the EU. 
+  
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Top 10 EU Countries Humanitarian Allocations to Ukraine\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Plot top humanitarian aid allocators
@@ -146,11 +142,6 @@ top_humanitarian_allocators_eu
 
 # The Top 5 European Countries in terms of Financial Commitment 
 
-
-**Table \ref{tab2}**:
-
-  - Summarizes the financial commitments made by EU countries to Ukraine, emphasizing their pledged support.
-  
 - **EU (Commission and Council)**:
   - Leads with a total commitment of \$71.04 billion.
   - Indicates long-term financial support with a significant military commitment of \$56.11 billion.
@@ -175,6 +166,7 @@ top_committers <- top_eu_committers(commit_summary, top_n = 6)
 top_committers_table <- build_commit_table(top_committers, Latex = TRUE)
 
 ```
+Table 3.1 above summarizes the financial commitments made by EU countries to Ukraine, emphasizing their pledged support.
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Top 10 EU Countries Humanitarian Commitments to Ukraine\\label{Figure2}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
@@ -184,13 +176,13 @@ plot_top_humanitarian_commit
 
 ```
 
-# Lowest 5 European Allocators
+# Lowest 5 European Countries in terms of Financial Allocations
 
 ```{r, lowest-allocators, echo=FALSE, fig.align='center', results = 'asis'}
  
 lowest_contributions<- lowest_contributors(alloc_summary)
 
-lowest_committers_table <- build_allocations_table(lowest_contributions, Latex = TRUE)
+lowest_allocations_table <- build_allocations_table(lowest_contributions, Latex = TRUE)
 
 ```
 
@@ -221,5 +213,4 @@ bottom_committers_table <- build_commit_table(bottom_eu_committment, Latex = TRU
 - **Implications**:
   - These tables help identify the countries with the least financial engagement in supporting Ukraine.
   - The focus on military aid indicates strategic contributions, even from countries with otherwise low financial involvement.
-
 

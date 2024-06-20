@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.15)  18 JUN 2024 21:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.19)  20 JUN 2024 02:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -701,78 +701,78 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 216.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 213.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 216.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 213.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 216.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 213.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 216.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 213.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 216.
+(Font)              <10> on input line 213.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 216.
+(Font)              <7> on input line 213.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 216.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 216.
+(Font)              <5> on input line 213.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 213.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 216.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 213.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 216.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 213.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14> on input line 216.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 247.
+(Font)              <14> on input line 213.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 244.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 284.
+(hyperref)                removing `\@ifnextchar' on input line 280.
 
 [1
 
 
-{c:/ProgramData/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+{c:/ProgramData/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 
 [2]
-Overfull \hbox (52.62721pt too wide) in alignment at lines 420--432
+Overfull \hbox (52.62721pt too wide) in alignment at lines 411--423
  [] [] [] [] 
  []
 
 
 
 [3]
-<README_files/figure-latex/unnamed-chunk-1-1.png, id=57, 505.89pt x 361.35pt>
+<README_files/figure-latex/unnamed-chunk-1-1.png, id=53, 505.89pt x 361.35pt>
 File: README_files/figure-latex/unnamed-chunk-1-1.png Graphic file (type png)
 <use README_files/figure-latex/unnamed-chunk-1-1.png>
-Package pdftex.def Info: README_files/figure-latex/unnamed-chunk-1-1.png  used on input line 437.
+Package pdftex.def Info: README_files/figure-latex/unnamed-chunk-1-1.png  used on input line 432.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
 
-Overfull \hbox (22.4766pt too wide) in paragraph at lines 437--438
+Overfull \hbox (22.4766pt too wide) in paragraph at lines 432--433
  [][] 
  []
 
 
 
 [4 <./README_files/figure-latex/unnamed-chunk-1-1.png>]
-Overfull \hbox (52.36165pt too wide) in alignment at lines 506--518
+Overfull \hbox (52.36165pt too wide) in alignment at lines 497--509
  [] [] [] [] 
  []
 
@@ -780,35 +780,37 @@ Overfull \hbox (52.36165pt too wide) in alignment at lines 506--518
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.518 \end{longtable}
-                      [5]
-<README_files/figure-latex/unnamed-chunk-2-1.png, id=74, 505.89pt x 361.35pt>
+l.509 \end{longtable}
+                     
+<README_files/figure-latex/unnamed-chunk-2-1.png, id=66, 505.89pt x 361.35pt>
 File: README_files/figure-latex/unnamed-chunk-2-1.png Graphic file (type png)
 <use README_files/figure-latex/unnamed-chunk-2-1.png>
-Package pdftex.def Info: README_files/figure-latex/unnamed-chunk-2-1.png  used on input line 523.
+Package pdftex.def Info: README_files/figure-latex/unnamed-chunk-2-1.png  used on input line 517.
 (pdftex.def)             Requested size: 505.88875pt x 361.34912pt.
 
-Overfull \hbox (22.4766pt too wide) in paragraph at lines 523--524
+Overfull \hbox (22.4766pt too wide) in paragraph at lines 517--518
  [][] 
  []
 
 
+
+[5]
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.546 \end{longtable}
-                      [6 <./README_files/figure-latex/unnamed-chunk-2-1.png>]
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.565 \end{longtable}
+l.540 \end{longtable}
                      
 
-[7]
+[6 <./README_files/figure-latex/unnamed-chunk-2-1.png>]
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.559 \end{longtable}
+                     
 No file README.bbl.
 
 
-[8] (./README.aux)
+[7] (./README.aux)
  ***********
 LaTeX2e <2024-06-01> patch level 1
 L3 programming layer <2024-05-27>
@@ -817,21 +819,21 @@ L3 programming layer <2024-05-27>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `README.out' has not changed.
-(rerunfilecheck)             Checksum: 6DA1AA7F3EBE980F3DCA0B3D4EE25E0F;1324.
+(rerunfilecheck)             Checksum: BB40CA75F0E712393BA58BFE4582A1DD;1981.
  ) 
 Here is how much of TeX's memory you used:
- 18248 strings out of 475559
- 333572 string characters out of 5777725
+ 18243 strings out of 475559
+ 333772 string characters out of 5777725
  1937908 words of memory out of 5000000
- 40538 multiletter control sequences out of 15000+600000
+ 40536 multiletter control sequences out of 15000+600000
  609177 words of font info for 72 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,79p,543b,1073s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on README.pdf (8 pages, 199392 bytes).
+ 75i,11n,79p,543b,1055s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb>
+Output written on README.pdf (7 pages, 195027 bytes).
 PDF statistics:
- 145 PDF objects out of 1000 (max. 8388607)
- 112 compressed objects within 2 object streams
- 26 named destinations out of 1000 (max. 500000)
+ 131 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
+ 24 named destinations out of 1000 (max. 500000)
  59 words of extra memory for PDF output out of 10000 (max. 10000000)
 

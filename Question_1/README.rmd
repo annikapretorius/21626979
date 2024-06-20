@@ -107,11 +107,22 @@ source("code/calculate_correlation.R")
 source("code/plot_correlation.R")
 source("code/plot_HBO_name_persistence_summary.R")
 source("code/plot_name_persistence_summary.R")
-source("code/Data_Data_Collating")
 
-# Test the function
-data_root <- "Question_1/data/US_Baby_names"
-combined_baby_data <- Data_Collating_RDS(data_root)
+
+#Loading the Data 
+Baby_Names <- readRDS("data/US_Baby_names/Baby_Names_By_US_State.rds")
+charts <- readRDS("Data/US_Baby_names/charts.rds")
+HBO_Titles <- readRDS("Data/US_Baby_names/HBO_titles.rds")
+HBO_Credits <- readRDS("Data/US_Baby_names/HBO_credits.rds")
+
+#Creating Different Datasets for Later Use
+Baby_Names_df<- filter_and_arrange_baby_names(Baby_Names)
+HBO_joined_df <- prepare_HBO_data(HBO_Titles, HBO_Credits)
+combined_result_final_top_25_names <- combine_top_25_names(Baby_Names_df, HBO_joined_df, "Count", "tmdb_popularity")
+
+Girl_Baby_Names_df <- Baby_Names_df %>% filter(Gender == "F")
+Boy_Baby_Names_df <- Baby_Names_df %>% filter(Gender == "M")
+
 ```
 
 \newpage
@@ -155,7 +166,7 @@ Names like "Susan" and "Mary" were more popular in earlier decades, while "Ashle
 Other names such as "Matthew," "Joshua," and "Joseph" show high presence in the top 25 names in the 1980s and 1990s.
 Male names show more consistent presence over a longer period compared to female names, which exhibit more variation and changes over the years.
 
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Proportion of the Top 25 Baby Names and their Persistence Over Time for both Genders\\label{Figure3}", fig.ext = 'png', fig.height = 4, fig.width = 6}
+```{r,  echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center', fig.cap = "The Proportion of the Top 25 Baby Names and their Persistence Over Time for both Genders\\label{Figure3}", fig.ext = 'png', fig.height = 4, fig.width = 6}
 
 plot_baby_name_persistance<- plot_name_persistence_heatmap(Girl_Baby_Names_df, Boy_Baby_Names_df)
 plot_baby_name_persistance
@@ -201,7 +212,7 @@ summary_HBO_persistance_plot
 
 Now i will analyse the correlation between the persistent boy names within the Baby names dataframe in comparison to that of the most persistent names within the HBO baby frame, which all happen to be male. 
 
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Correlation Between the Persistence of HBO names and Baby Names.\\label{Figure7}", fig.ext = 'png', fig.height = 4, fig.width = 6}
+```{r,  echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center', fig.cap = "The Correlation Between the Persistence of HBO names and Baby Names.\\label{Figure7}", fig.ext = 'png', fig.height = 4, fig.width = 6}
 
 result <- calculate_correlation(combined_result_final_top_25_names)
 combined_persistence <- result$combined_persistence

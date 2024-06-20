@@ -129,23 +129,24 @@ Coldplay and Metallica, though distinct in their musical styles, both enjoy sign
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Coldplay's Popularity per Album.\\label{Figure1}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-g1<- popularity_boxplot(coldplay_filtered, xaxis_size = 10, xaxis_rows = 3)
+boxplot_popularity_coldplay<- popularity_boxplot(coldplay_filtered, xaxis_size = 10, xaxis_rows = 3)
 
-g1
+boxplot_popularity_coldplay
+
 ```
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Metallica's Popularity per Album.\\label{Figure2}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-g2<- popularity_boxplot(metallica_filtered, xaxis_size = 10, xaxis_rows = 3)
+popularity_boxplot_metallica<- popularity_boxplot(metallica_filtered, xaxis_size = 10, xaxis_rows = 3)
 
-g2
+popularity_boxplot_metallica
 ```
 As you can see from \ref{Figure1} and \ref{Figure2}, Coldplay and Metallica, despite having very different musical styles, both enjoy massive popularity across their albums. However as seen in \ref{Figure3} below, Coldplay is more popular overall than Metallica. 
 
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Comparing both Band's Popularity\\label{Figure3}", fig.ext = 'png', fig.height = 5, fig.width = 7}
+```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Comparing both of the Band's Popularity\\label{Figure3}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-g3<- create_box_plot(combined_band_data, "popularity", "Popularity Comparison: Coldplay vs Metallica")
-g3
+both_band_boxplot<- create_box_plot(combined_band_data, "popularity", "Popularity Comparison: Coldplay vs Metallica")
+both_band_boxplot
 
 ```
 
@@ -154,8 +155,8 @@ g3
 The density plot reveals the distribution of song popularity for Coldplay and Metallica. Coldplay's songs tend to have a more uniform distribution with a slight peak, indicating a consistent level of popularity across their catalog. Metallica, on the other hand, shows a more pronounced peak, suggesting that a significant number of their songs reach higher popularity scores. This contrast highlights how Metallica has a core set of extremely popular tracks, while Coldplay's popularity is more evenly spread across their discography. This plot helps us understand the different ways in which each band's music resonates with their listeners.
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Density Plot of Popularity\\label{Figure4}", fig.ext = 'png', fig.height = 5, fig.width = 7}
-g5 <- combined_density_plot(combined_band_data, "popularity", "Density Plot of Popularity: Coldplay vs Metallica")
-g5
+density_plot_bands <- combined_density_plot(combined_band_data, "popularity", "Density Plot of Popularity: Coldplay vs Metallica")
+density_plot_bands
 
 ```
 
@@ -164,8 +165,9 @@ g5
 The scatter plot of energy versus danceability, \ref{Figure5}, offers an insightful comparison between Coldplay and Metallica's musical styles. Coldplay's songs generally cluster towards the higher end of danceability, reflecting their melodic and rhythmic compositions designed to be both catchy and uplifting. In contrast, Metallica's tracks tend to score higher on energy but lower on danceability, showcasing their intense sound that's characteristic of heavy metal. This scatter plot effectively illustrates the distinct musical signatures of each band, highlighting Coldplay's tendency towards more danceable tunes and Metallica's focus on high-energy, powerful performances.
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "Energy versus Danceability\\label{Figure5}", fig.ext = 'png', fig.height = 5, fig.width = 7}
-g6 <- combined_scatter_plot(combined_band_data, "energy", "danceability", "Energy vs Danceability: Coldplay vs Metallica")
-g6
+scatterplot_danceability_energy <- combined_scatter_plot(combined_band_data, "energy", "danceability", "Energy vs Danceability: Coldplay vs Metallica")
+scatterplot_danceability_energy
+
 ```
 
 
@@ -176,13 +178,10 @@ Coldplay and Metallica have both spent a lot of time on the Billboard Top 100, s
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Billboard 100s Results for both bands\\label{Figure6}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
 # Filter the Billboard dataset for Coldplay and Metallica
-billboard_filtered <- billboard_100 %>%
-  filter(grepl("Coldplay", artist, ignore.case = TRUE) | grepl("Metallica", artist, ignore.case = TRUE)) %>%
-  mutate(band = ifelse(grepl("Coldplay", artist, ignore.case = TRUE), "Coldplay", "Metallica")) %>% rename(weeks_on_board = `weeks-on-board`)
+billboard_filtered_data <- filter_billboard_for_bands(billboard_100)
 
-
-g7 <- bar_plot_billboard_weeks(billboard_filtered)
-g7
+billboard_boxplot <- bar_plot_billboard_weeks(billboard_filtered_data)
+billboard_boxplot
 
 ```
 
