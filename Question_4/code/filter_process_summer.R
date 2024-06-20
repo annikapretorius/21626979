@@ -1,4 +1,4 @@
-# Main function
+# Main function for filtering, classifying, and calculating total medals
 filter_process_summer <- function(gdp_data, summer_data) {
 
     # Helper functions
@@ -7,9 +7,6 @@ filter_process_summer <- function(gdp_data, summer_data) {
             filter(Country == "India") %>%
             pull(`GDP per Capita`)
     }
-
-    # Get India's GDP per Capita
-    India_GDP <- get_india_gdp(gdp_data)
 
     find_similar_sized_economies <- function(gdp_data, India_GDP, top_n = 10) {
         gdp_data %>%
@@ -43,6 +40,9 @@ filter_process_summer <- function(gdp_data, summer_data) {
     gdp_data$Country <- recode(gdp_data$Country, !!!country_code_to_name)
     summer_data$Country <- recode(summer_data$Country, !!!country_code_to_name)
 
+    # Get India's GDP per Capita
+    India_GDP <- get_india_gdp(gdp_data)
+
     # Find relevant countries
     similar_sized_economies <- find_similar_sized_economies(gdp_data, India_GDP)
     emerging_gdp_data <- filter_emerging_markets(gdp_data)
@@ -55,18 +55,19 @@ filter_process_summer <- function(gdp_data, summer_data) {
     filtered_summer_olympics <- summer_data %>%
         filter(Country %in% combined_countries$Country)
 
+    # Add the 'Sport Type' column to the data frame
     team_sports <- c("Basketball", "Volleyball", "Hockey", "Football", "Handball",
-                     "Rugby", "Waterpolo", "Rowing", "Softball", "Baseball", "Curling", "Ice Hockey",
-                     "Bobsleigh", "Luge", "Biathlon")
+                     "Rugby", "Waterpolo", "Rowing", "Softball", "Baseball")
 
-    team_events <- c("Military Patrol", "Four-Man", "Curling", "Ice Hockey", "Pairs", "Two-Man", "Teams",
-                     "Team", "4X5 KM Relay", "4X10KM Relay", "Team Sprint", "Team Pursuit", "4X10KM Relay",
-                     "Combined (4 Events)", "Five-Man", "Relay", "Team", "Double", "Pairs")
+    team_events <- c("4x100m Relay", "4x400m Relay", "Team Pursuit", "Doubles", "Doubles Badminton",
+                     "50M Army Pistol, Team", "600M Free Rifle, Team", "4X100M Freestyle Relay",
+                     "Foil Team", "Team", "Double Sculls", "470 - Two Person Dinghy", "Team Competition",
+                     "Team (Fita Olympic Round - 70M)", "4X100M Medley Relay", "K-4 1000M (Kayak Four)")
 
-    filtered_summer_olympics <- summer_data %>%
+    # Classify Sport_Type
+    filtered_summer_olympics <- filtered_summer_olympics %>%
         mutate(Sport_Type = ifelse(Sport %in% team_sports, "Team", "Individual")) %>%
         mutate(Sport_Type = ifelse(grepl(paste(team_events, collapse = "|"), Event), "Team", Sport_Type))
-
 
     # Adjust medal counting to count one medal per team event
     adjusted_data <- filtered_summer_olympics %>%
@@ -85,3 +86,4 @@ filter_process_summer <- function(gdp_data, summer_data) {
 
     return(total_medals)
 }
+

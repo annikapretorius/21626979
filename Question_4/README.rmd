@@ -52,7 +52,6 @@ library(xtable)
 library(ggplot2)
 library(broom)
 
-
 #loading the relevant data 
 Winter<- readRDS("Data/olympics/winter.rds")
 Summer <- readRDS("Data/olympics/summer.rds")
@@ -92,6 +91,15 @@ table_total_metals_india_and_others<- total_metals_table(filtered_summer_olympic
 
 ```
 
+
++ The Table \ref{tab:total_medals} above presents a comprehensive analysis of the total medals won by India and other selected countries in the Olympics. China leads the chart with an impressive 430 total medals, comprising 170 gold, 141 silver, and 119 bronze medals, reflecting its dominance in the global sporting arena. Russia follows with 376 total medals, including 125 gold, 113 silver, and 138 bronze medals, showcasing its strong performance in various sports disciplines.
+
++ Other notable performances include Brazil and South Africa, which have secured 107 and 76 total medals, respectively. Brazil's medal tally is highlighted by 23 gold, 29 silver, and 55 bronze medals, while South Africa has 23 gold, 26 silver, and 27 bronze medals.
+
++ India, the focal point of this analysis, has won a total of 26 medals, with 9 gold, 6 silver, and 11 bronze medals. This places India behind several countries in the table, indicating room for improvement in its Olympic performance.
+
++ Overall, the data underscores the varying levels of success among different countries, with China and Russia emerging as top contenders, while countries like India and Nigeria exhibit potential for growth and development in their Olympic pursuits.
+
 # Analysing the Top Countries Dominating both the Summer and Winter Olympics over the Years: A Time-Series Analysis 
 
 ## Analysis of Total Medals Over the Years
@@ -120,8 +128,8 @@ top_performers_winter <- find_top_performing_countries(filtered_winter, top_n = 
 
 dominating_olympic_data_dominators<- filter_and_combine_olympic_data_dominators(Summer, Winter)
 
-g1 <- create_time_series_plot(dominating_olympic_data_dominators)
-g1
+times_series_olympic_dominators <- create_time_series_plot(dominating_olympic_data_dominators)
+times_series_olympic_dominators
 
 ```
 
@@ -147,8 +155,7 @@ all_countries_df <- filter_and_combine_all_olympic_data(Summer, Winter)
 metrics_data_combined <- metrics_data(all_countries_df, GDP)
 
 #Find and visualize top countries by Medals_Per_Capita
-g2 <- find_and_visualize_top_countries(metrics_data_combined, "Medals_Per_Capita")
-g2
+plot_metals_per_capita <- find_and_visualize_top_countries(metrics_data_combined, "Medals_Per_Capita")
 
 ```
 
@@ -167,10 +174,11 @@ g2
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate Winning Medals Per Capita\\label{Figure3}", fig.ext = 'png', fig.height = 3, fig.width = 5}
 
 #Find and visualize top countries by Medals_Per_GDP
-g3 <- find_and_visualize_top_countries(metrics_data_combined, "Medals_Per_GDP")
-g3
+plot_metals_per_GDP  <- find_and_visualize_top_countries(metrics_data_combined, "Medals_Per_GDP")
+
 ```
 **Similarity in Figures**:
+
 + The two figures show similar countries leading in both medals per capita and medals per GDP. This similarity suggests that these countries not only excel in their ability to convert population size into Olympic success but also manage their economic resources efficiently to achieve high medal counts. 
 
 + The dominance of URS and GDR in both figures highlights their historical strength in Olympic competitions during the periods they existed, indicating state-sponsored sports programs and a high prioritization of athletic success.
@@ -187,7 +195,7 @@ g3
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Individual Events by Country in Winning Medals in Archery\\label{Figure4}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-g3 <- analyze_archery(Summer)
+archery_plot <- analyze_archery(Summer)
 ```
 ## List of Countries in the Figure above 
 + AUS: Australia
@@ -210,7 +218,7 @@ g3 <- analyze_archery(Summer)
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "A Pie Chart showcasing the Distibution of Medal Winnings by the Top 5 Countries in Individual Archery Events\\label{Figure5}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-g4 <- plot_medal_distribution_by_country(Summer)
+distribution_plot_piechart<- plot_medal_distribution_by_country(Summer)
 
 ```
 + The pie chart above shows the medal distribution by the top 5 countries in Archery individual events between the years 1900 and 2012. South Korea (KOR) dominates the chart with 46.7% of the total medals, followed by the USA (20%), the Soviet Union (URS) with 15.6%, Japan (JPN) with 8.9%, and China (CHN) with 8.9%.
@@ -221,20 +229,20 @@ g4 <- plot_medal_distribution_by_country(Summer)
 
 + Each panel represents one of the top countries, showing the total medals won by men and women over the years. 
 
-+South Korea (KOR) and the USA display noticeable differences in performance between genders, while other countries like China, Finland, and Japan show consistent performance between men and women.
++ South Korea (KOR) and the USA display noticeable differences in performance between genders, while other countries like China, Finland, and Japan show consistent performance between men and women.
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure6}", fig.ext = 'png', fig.height = 5, fig.width = 7}
 
-g5 <- analyze_top_countries_gender_performance(Summer)
+top_country_gender_plot<- analyze_top_countries_gender_performance(Summer)
 
 ```
 
 ```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Top Countries that Dominate in both the Summer and Winter Olympics\\label{Figure7}", fig.ext = 'png', fig.height = 6, fig.width = 7}
 
-g6 <- analyze_gender_gold_correlation(Summer)
+gender_gold_correlation_plot <- analyze_gender_gold_correlation(Summer)
 
 ```
-+ Finally, \ref{Figure6}, determines if there is a correlation between gender and the probability of winning a medal by  fitted a logistic regression model.
++ Finally, \ref{Figure7}, determines if there is a correlation between gender and the probability of winning a medal by  fitted a logistic regression model.
 
 + This model helped us predict the probability of winning a gold medal based on gender.
 
