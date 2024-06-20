@@ -70,6 +70,8 @@ Financial Commitments impact planning and international relations, signaling lon
 
 ```{r setup, echo = FALSE, include=FALSE}
 
+list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+
 # Load necessary libraries
 library(tidyverse)
 library(knitr)

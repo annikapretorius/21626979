@@ -41,6 +41,8 @@ abstract: |
 
 knitr::opts_chunk$set(fig.path = 'README_files/figure-latex/')
 
+list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+
 # Load necessary libraries
 
 library(dplyr)

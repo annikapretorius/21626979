@@ -107,9 +107,12 @@ source("code/calculate_correlation.R")
 source("code/plot_correlation.R")
 source("code/plot_HBO_name_persistence_summary.R")
 source("code/plot_name_persistence_summary.R")
-
+source("code/add.prop.R")
+source("code/rank_and_filter_top_25.R")
+source("code/plot_HBO_name_persistence.R")
 
 #Loading the Data 
+
 Baby_Names <- readRDS("data/US_Baby_names/Baby_Names_By_US_State.rds")
 charts <- readRDS("Data/US_Baby_names/charts.rds")
 HBO_Titles <- readRDS("Data/US_Baby_names/HBO_titles.rds")
