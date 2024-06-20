@@ -311,22 +311,12 @@ list.files('Question_3/code/', full.names = T, recursive = T) %>% as.list() %>% 
 
 # Summarize the data while filtering for only EU countries
 
-source("code/summarise_commitments.R")
-source("code/summarise_allocations.R")
-source("code/top_contributors.R")
-source("code/top_eu_committers.R")
-source("code/build_commit_table.R")
-source("code/build_allocations_table.R")
-source("code/plot_top_humanitarian_allocators.R")
-source("code/plot_top_humanitarian_committers.R")
-source("code/lowest_contributors.R")
-source("code/bottom_eu_committers.R")
-
 alloc_summary <- summarise_allocations(alloc)
 commit_summary <- summarise_commitments(commit)
 
 # Combine summaries and find total for the EU Commissions and Council
 combined_summary <- left_join(alloc_summary, commit_summary, by = "Country")
+
 ```
 
 # Introduction 
@@ -496,8 +486,6 @@ bottom_committers_table <- build_commit_table(bottom_eu_committment, Latex = TRU
 ##Question 4 Solution 
 
 ```{r setup, include=FALSE}
-
-knitr::opts_chunk$set(fig.path = 'README_files/figure-latex/')
 
 # Load necessary libraries
 
