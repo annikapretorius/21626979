@@ -47,11 +47,3 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
-
-# Ignore data files in Question folders
-Question*/data*
-
-# Ignore CSV and TXT data files in Question folders
-Question*/*.csv
-Question*/*.txt
-Question*/*.rds
