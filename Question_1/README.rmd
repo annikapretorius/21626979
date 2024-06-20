@@ -186,7 +186,7 @@ We can therefore see that the top boy names over the last few decades illustrate
 
 # Analysing the HBO Dataset
 
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Persistence of HBO names in the top rankings over time\\label{Figure5}", fig.ext = 'png', fig.height = 4, fig.width = 6}
+```{r,  echo = FALSE, warning = FALSE, message = FALSE,  fig.align = 'center', fig.cap = "The Persistence of HBO names in the top rankings over time\\label{Figure5}", fig.ext = 'png', fig.height = 4, fig.width = 6}
 
 HBO_name_persistence_plot <- plot_HBO_name_persistence(combined_result_final_top_25_names)
 HBO_name_persistence_plot
@@ -202,7 +202,7 @@ The distribution of the years in top rankings shows that while some names had a 
 
 The bar chart effectively highlights the relative persistence of each name, with the length of the bars corresponding to the number of years each name stayed in the top rankings. The use of horizontal bars makes it easy to compare the persistence across different names. This analysis helps in understanding the longevity and popularity of certain names within HBO shows, providing insights into naming trends and cultural influences over the years.
 
-```{r,  echo = FALSE, warning =  FALSE, fig.align = 'center', fig.cap = "The Persistence of HBO names in the top rankings over time.\\label{Figure6}", fig.ext = 'png', fig.height = 4, fig.width = 6}
+```{r,  echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center', fig.cap = "The Persistence of HBO names in the top rankings over time.\\label{Figure6}", fig.ext = 'png', fig.height = 4, fig.width = 6}
 
 # Plot the persistence of HBO names
 summary_HBO_persistance_plot<- plot_HBO_name_persistence_summary(combined_result_final_top_25_names)
@@ -212,7 +212,7 @@ summary_HBO_persistance_plot
 
 Now i will analyse the correlation between the persistent boy names within the Baby names dataframe in comparison to that of the most persistent names within the HBO baby frame, which all happen to be male. 
 
-```{r,  echo = FALSE, warning = FALSE, message = FALSE, fig.align = 'center', fig.cap = "The Correlation Between the Persistence of HBO names and Baby Names.\\label{Figure7}", fig.ext = 'png', fig.height = 4, fig.width = 6}
+```{r,  echo = FALSE, warning = FALSE, message = FALSE,  fig.align = 'center', fig.cap = "The Correlation Between the Persistence of HBO names and Baby Names.\\label{Figure7}", fig.ext = 'png', fig.height = 4, fig.width = 6}
 
 result <- calculate_correlation(combined_result_final_top_25_names)
 combined_persistence <- result$combined_persistence
